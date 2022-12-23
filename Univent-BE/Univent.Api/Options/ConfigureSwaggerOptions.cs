@@ -25,11 +25,8 @@ namespace Univent.Api.Options
 
         private OpenApiInfo CreateVersionInfo(ApiVersionDescription description)
         {
-            var info = new OpenApiInfo
-            {
-                Title = "Univent",
-                Version = description.ApiVersion.ToString()
-            };
+            var info = new OpenApiInfo{ Title = "Univent",
+                Version = description.ApiVersion.ToString()};
 
             if(description.IsDeprecated)
             {
