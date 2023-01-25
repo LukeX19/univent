@@ -9,7 +9,8 @@ namespace Univent.Domain.Aggregates.UserAggregate
         public string IdentityID { get; private set; }
         public BasicInformation BasicInfo { get; private set; }
         public DateTime CreatedDate { get; private set; }
-        public ICollection<Event> CreatedEvents { get; private set; }
+        private readonly List<Event> _events = new List<Event>();
+        public IEnumerable<Event> CreatedEvents { get { return _events; } }
 
         //Constructor
         private UserProfile()

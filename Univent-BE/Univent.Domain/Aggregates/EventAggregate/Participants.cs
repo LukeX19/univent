@@ -6,11 +6,12 @@ namespace Univent.Domain.Aggregates.EventAggregate
     {
         public Guid EventID { get; private set; }
         public Event Event { get; private set; }
-        public ICollection<UserProfile> ParticipantsOfEvent { get; private set; }
+        private readonly List<UserProfile> _participants = new List<UserProfile>();
+        public IEnumerable<UserProfile> ParticipantsOfEvent { get { return _participants; } }
 
         public void AddParticipant(UserProfile newUser)
         {
-            ParticipantsOfEvent.Add(newUser);
+            _participants.Add(newUser);
         }
     }
 }
