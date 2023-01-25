@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Univent.Domain.Aggregates.UniversityAggregate;
 
-namespace Univent.Domain.Aggregates.UserProfileAggregate
+namespace Univent.Domain.Aggregates.UserAggregate
 {
     public class BasicInformation
     {
@@ -14,6 +10,9 @@ namespace Univent.Domain.Aggregates.UserProfileAggregate
         public string PhoneNumber { get; private set; }
         public DateTime DateOfBirth { get; private set; }
         public string Hometown { get; private set; }
+        public Guid UniversityID { get; private set; }
+        public University UniversityInfo { get; private set; }
+        public UniversityYear Year { get; private set; }
 
         //Constructor
         private BasicInformation()
@@ -21,21 +20,22 @@ namespace Univent.Domain.Aggregates.UserProfileAggregate
         }
 
         private static BasicInformation CreateBasicInformation(string firstName, string lastName, string emailAddress,
-            string phoneNumber, DateTime dateOfBirth, string hometown)
+            string phoneNumber, DateTime dateOfBirth, string hometown, Guid chosenUniversityID, UniversityYear chosenYear)
         {
             //TO DO: add validation and error handling
-
-            var basicInformation = new BasicInformation
+            var newBasicInformation = new BasicInformation
             {
                 FirstName = firstName,
                 LastName = lastName,
-                EmailAddress= emailAddress,
-                PhoneNumber= phoneNumber,
-                DateOfBirth= dateOfBirth,
-                Hometown= hometown
+                EmailAddress = emailAddress,
+                PhoneNumber = phoneNumber,
+                DateOfBirth = dateOfBirth,
+                Hometown = hometown,
+                UniversityID = chosenUniversityID,
+                Year = chosenYear
             };
 
-            return basicInformation;
+            return newBasicInformation;
         }
     }
 }

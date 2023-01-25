@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Univent.Domain.Aggregates.EventAggregate;
 
-namespace Univent.Domain.Aggregates.UserProfileAggregate
+namespace Univent.Domain.Aggregates.UserAggregate
 {
     public class UserProfile
     {
@@ -13,6 +9,7 @@ namespace Univent.Domain.Aggregates.UserProfileAggregate
         public string IdentityID { get; private set; }
         public BasicInformation BasicInfo { get; private set; }
         public DateTime CreatedDate { get; private set; }
+        public ICollection<Event> CreatedEvents { get; private set; }
 
         //Constructor
         private UserProfile()
@@ -23,21 +20,20 @@ namespace Univent.Domain.Aggregates.UserProfileAggregate
         public static UserProfile CreateUserProfile(string identityID, BasicInformation basicInfo)
         {
             //TO DO: add validation and error handling
-
-            var userProfile = new UserProfile
+            var newUserProfile = new UserProfile
             {
                 IdentityID = identityID,
                 BasicInfo = basicInfo,
                 CreatedDate = DateTime.UtcNow
             };
 
-            return userProfile;
+            return newUserProfile;
         }
 
         //Public methods start here
         public void UpdateBasicInformation(BasicInformation newInformation)
         {
-            BasicInfo= newInformation;
+            BasicInfo = newInformation;
         }
     }
 }
