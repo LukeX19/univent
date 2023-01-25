@@ -4,7 +4,8 @@
     {
         public Guid EventTypeID { get; private set; }
         public string Name { get; private set; }
-        public ICollection<Event> CreatedEvents { get; private set; }
+        private readonly List<Event> _events = new List<Event>();
+        public IEnumerable<Event> Events { get { return _events; } }
 
         //Constructor
         private EventType()
