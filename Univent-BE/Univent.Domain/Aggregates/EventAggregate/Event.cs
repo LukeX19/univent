@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Univent.Domain.Aggregates.UserProfileAggregate;
+﻿using Univent.Domain.Aggregates.UserAggregate;
 
 namespace Univent.Domain.Aggregates.EventAggregate
 {
@@ -12,12 +7,17 @@ namespace Univent.Domain.Aggregates.EventAggregate
         public Guid EventID { get; private set; }
         public Guid UserID { get; private set; }
         public UserProfile UserProfile { get; private set; }
+        public Participants Participants { get; private set; }
+        public Guid EventTypeID { get; private set; }
+        public EventType EventType { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public int MaximumParticipants { get; private set; }
-        public DateTime StartDate { get; private set; }
-        public DateTime EndDate { get; private set; }
+        public DateTime StartTime { get; private set; }
+        public DateTime EndTime { get; private set; }
         public DateTime CreatedDate { get; private set; }
+        public bool IsCancelled { get; private set; }
+        public string? CancellationReason { get; private set; }
 
         //Constructor
         private Event()
@@ -26,32 +26,33 @@ namespace Univent.Domain.Aggregates.EventAggregate
 
         //Factory method
         public static Event CreateEvent(Guid userID, string name, string description,
-            int maximumParticipants, DateTime startDate, DateTime endDate)
+            int maximumParticipants, DateTime startTime, DateTime endTime)
         {
             //TO DO: add validation and error handling
-            var createEvent = new Event 
+            var newEvent = new Event 
             { 
-                UserID= userID,
-                Name= name,
-                Description= description,
-                MaximumParticipants= maximumParticipants,
-                StartDate= startDate,
-                EndDate= endDate,
-                CreatedDate = DateTime.UtcNow
+                UserID = userID,
+                Name = name,
+                Description = description,
+                MaximumParticipants = maximumParticipants,
+                StartTime = startTime,
+                EndTime = endTime,
+                CreatedDate = DateTime.UtcNow,
+                IsCancelled = false
             };
 
-            return createEvent;
+            return newEvent;
         }
 
         //Public methods
         public void UpdateEvent(string newName, string newDescription, int newMaximumParticipants,
-            DateTime newStartDate, DateTime newEndDate)
+            DateTime newStartTime, DateTime newEndTime)
         {
-            Name= newName;
-            Description= newDescription;
-            MaximumParticipants= newMaximumParticipants;
-            StartDate= newStartDate;
-            EndDate= newEndDate;
+            Name = newName;
+            Description = newDescription;
+            MaximumParticipants = newMaximumParticipants;
+            StartTime = newStartTime;
+            EndTime = newEndTime;
         }
     }
 }
