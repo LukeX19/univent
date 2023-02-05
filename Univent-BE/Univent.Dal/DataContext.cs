@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Univent.Dal.Configurations;
 using Univent.Domain.Aggregates.EventAggregate;
 using Univent.Domain.Aggregates.UniversityAggregate;
 using Univent.Domain.Aggregates.UserAggregate;
@@ -17,9 +18,12 @@ namespace Univent.Dal
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*base.OnModelCreating(builder);*/
+            modelBuilder.ApplyConfiguration(new IdentityUserLoginConfig());
+            modelBuilder.ApplyConfiguration(new IdentityUserRoleConfig());
+            modelBuilder.ApplyConfiguration(new IdentityUserTokenConfig());
+            modelBuilder.ApplyConfiguration(new ParticipantsConfig());
         }
     }
 }

@@ -16,4 +16,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Univent.Domain\Univent.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
