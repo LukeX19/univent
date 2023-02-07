@@ -20,10 +20,11 @@ namespace Univent.Dal
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new UserProfileConfig());
+            modelBuilder.ApplyConfiguration(new EventParticipantConfig());
             modelBuilder.ApplyConfiguration(new IdentityUserLoginConfig());
             modelBuilder.ApplyConfiguration(new IdentityUserRoleConfig());
             modelBuilder.ApplyConfiguration(new IdentityUserTokenConfig());
-            modelBuilder.ApplyConfiguration(new ParticipantsConfig());
         }
     }
 }

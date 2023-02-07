@@ -1,13 +1,21 @@
-﻿using Univent.Domain.Aggregates.UserAggregate;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Univent.Domain.Aggregates.UserAggregate;
 
 namespace Univent.Domain.Aggregates.EventAggregate
 {
     public class Event
     {
+        [Key]
         public Guid EventID { get; private set; }
+
+        [ForeignKey("UserProfile")]
         public Guid UserID { get; private set; }
         public UserProfile UserProfile { get; private set; }
-        public Participants Participants { get; private set; }
+        /*public EventParticipant Participants { get; private set; }*/
+
+        private readonly List<EventParticipant> _participants = new List<EventParticipant>();
+        public IEnumerable<EventParticipant> Participants { get { return _participants; } }
         public Guid EventTypeID { get; private set; }
         public EventType EventType { get; private set; }
         public string Name { get; private set; }
