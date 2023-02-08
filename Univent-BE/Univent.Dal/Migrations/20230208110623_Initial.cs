@@ -147,13 +147,13 @@ namespace Univent.Dal.Migrations
                 {
                     UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdentityID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BasicInfo_UniversityID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BasicInfo_FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BasicInfo_LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BasicInfo_EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BasicInfo_PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BasicInfo_DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BasicInfo_Hometown = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BasicInfo_UniversityID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BasicInfo_Year = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UniversityID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -181,6 +181,7 @@ namespace Univent.Dal.Migrations
                     EventID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EventTypeID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserProfileUserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MaximumParticipants = table.Column<int>(type: "int", nullable: false),
@@ -200,8 +201,8 @@ namespace Univent.Dal.Migrations
                         principalColumn: "EventTypeID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Events_UserProfiles_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Events_UserProfiles_UserProfileUserID",
+                        column: x => x.UserProfileUserID,
                         principalTable: "UserProfiles",
                         principalColumn: "UserID",
                         onDelete: ReferentialAction.Cascade);
@@ -222,13 +223,13 @@ namespace Univent.Dal.Migrations
                         column: x => x.EventID,
                         principalTable: "Events",
                         principalColumn: "EventID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_EventParticipant_UserProfiles_UserID",
                         column: x => x.UserID,
                         principalTable: "UserProfiles",
                         principalColumn: "UserID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -242,9 +243,9 @@ namespace Univent.Dal.Migrations
                 column: "EventTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Events_UserID",
+                name: "IX_Events_UserProfileUserID",
                 table: "Events",
-                column: "UserID");
+                column: "UserProfileUserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_BasicInfo_UniversityID",
