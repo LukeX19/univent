@@ -224,14 +224,11 @@ namespace Univent.Dal.Migrations
                     b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserProfileUserID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("EventID");
 
                     b.HasIndex("EventTypeID");
 
-                    b.HasIndex("UserProfileUserID");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Events");
                 });
@@ -248,7 +245,7 @@ namespace Univent.Dal.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("EventParticipant");
+                    b.ToTable("EventParticipants");
                 });
 
             modelBuilder.Entity("Univent.Domain.Aggregates.EventAggregate.EventType", b =>
@@ -263,7 +260,7 @@ namespace Univent.Dal.Migrations
 
                     b.HasKey("EventTypeID");
 
-                    b.ToTable("EventType");
+                    b.ToTable("EventTypes");
                 });
 
             modelBuilder.Entity("Univent.Domain.Aggregates.UniversityAggregate.University", b =>
@@ -281,6 +278,25 @@ namespace Univent.Dal.Migrations
                     b.ToTable("Universities");
                 });
 
+            modelBuilder.Entity("Univent.Domain.Aggregates.UserAggregate.Rating", b =>
+                {
+                    b.Property<Guid>("RatingID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("RatingID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Ratings");
+                });
+
             modelBuilder.Entity("Univent.Domain.Aggregates.UserAggregate.UserProfile", b =>
                 {
                     b.Property<Guid>("UserID")
@@ -294,8 +310,11 @@ namespace Univent.Dal.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UniversityID")
+                    b.Property<Guid>("UniversityID")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("UserID");
 
@@ -312,15 +331,15 @@ namespace Univent.Dal.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Univent.Domain.Aggregates.UserAggregate.UserProfile", "UserProfile")
+                    b.HasOne("Univent.Domain.Aggregates.UserAggregate.UserProfile", "Creator")
                         .WithMany("CreatedEvents")
-                        .HasForeignKey("UserProfileUserID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("EventType");
+                    b.Navigation("Creator");
 
-                    b.Navigation("UserProfile");
+                    b.Navigation("EventType");
                 });
 
             modelBuilder.Entity("Univent.Domain.Aggregates.EventAggregate.EventParticipant", b =>
@@ -342,11 +361,24 @@ namespace Univent.Dal.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Univent.Domain.Aggregates.UserAggregate.Rating", b =>
+                {
+                    b.HasOne("Univent.Domain.Aggregates.UserAggregate.UserProfile", "UserProfile")
+                        .WithMany("Ratings")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
             modelBuilder.Entity("Univent.Domain.Aggregates.UserAggregate.UserProfile", b =>
                 {
-                    b.HasOne("Univent.Domain.Aggregates.UniversityAggregate.University", null)
-                        .WithMany("UserProfiles")
-                        .HasForeignKey("UniversityID");
+                    b.HasOne("Univent.Domain.Aggregates.UniversityAggregate.University", "University")
+                        .WithMany("Students")
+                        .HasForeignKey("UniversityID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.OwnsOne("Univent.Domain.Aggregates.UserAggregate.BasicInformation", "BasicInfo", b1 =>
                         {
@@ -376,32 +408,18 @@ namespace Univent.Dal.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<Guid>("UniversityID")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<int>("Year")
-                                .HasColumnType("int");
-
                             b1.HasKey("UserProfileUserID");
-
-                            b1.HasIndex("UniversityID");
 
                             b1.ToTable("UserProfiles");
 
-                            b1.HasOne("Univent.Domain.Aggregates.UniversityAggregate.University", "UniversityInfo")
-                                .WithMany()
-                                .HasForeignKey("UniversityID")
-                                .OnDelete(DeleteBehavior.Cascade)
-                                .IsRequired();
-
                             b1.WithOwner()
                                 .HasForeignKey("UserProfileUserID");
-
-                            b1.Navigation("UniversityInfo");
                         });
 
                     b.Navigation("BasicInfo")
                         .IsRequired();
+
+                    b.Navigation("University");
                 });
 
             modelBuilder.Entity("Univent.Domain.Aggregates.EventAggregate.Event", b =>
@@ -416,7 +434,7 @@ namespace Univent.Dal.Migrations
 
             modelBuilder.Entity("Univent.Domain.Aggregates.UniversityAggregate.University", b =>
                 {
-                    b.Navigation("UserProfiles");
+                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("Univent.Domain.Aggregates.UserAggregate.UserProfile", b =>
@@ -424,6 +442,8 @@ namespace Univent.Dal.Migrations
                     b.Navigation("CreatedEvents");
 
                     b.Navigation("ParticipatedEvents");
+
+                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }
