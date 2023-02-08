@@ -2,6 +2,7 @@
 {
     public class Rating
     {
+        public Guid RatingID { get; private set; }
         public Guid UserID { get; private set; }
         public UserProfile UserProfile { get; private set; }
         public double Value { get; private set; }

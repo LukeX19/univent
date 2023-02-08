@@ -5,8 +5,8 @@ namespace Univent.Domain.Aggregates.UniversityAggregate
     public class University
     {
         public Guid UniversityID { get; private set; }
-        private readonly List<UserProfile> _users = new List<UserProfile>();
-        public IEnumerable<UserProfile> UserProfiles { get { return _users; } }
+        private readonly List<UserProfile> _students = new List<UserProfile>();
+        public IEnumerable<UserProfile> Students { get { return _students; } }
         public string Name { get; private set; }
 
         //Constructor

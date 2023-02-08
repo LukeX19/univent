@@ -8,8 +8,13 @@ namespace Univent.Dal.Configurations
     {
         public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
-            builder.HasKey(userProfile => userProfile.UserID);
-            builder.OwnsOne(userProfile => userProfile.BasicInfo);
+            builder.HasKey(u => u.UserID);
+
+            builder.OwnsOne(u => u.BasicInfo);
+
+            builder.HasOne(u => u.University)
+                .WithMany(u => u.Students)
+                .HasForeignKey(u => u.UniversityID);
         }
     }
 }
