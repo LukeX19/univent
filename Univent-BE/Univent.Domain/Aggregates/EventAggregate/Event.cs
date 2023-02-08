@@ -1,23 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Univent.Domain.Aggregates.UserAggregate;
+﻿using Univent.Domain.Aggregates.UserAggregate;
 
 namespace Univent.Domain.Aggregates.EventAggregate
 {
     public class Event
     {
-        [Key]
         public Guid EventID { get; private set; }
-
-        [ForeignKey("UserProfile")]
         public Guid UserID { get; private set; }
+        public Guid EventTypeID { get; private set; }
         public UserProfile UserProfile { get; private set; }
-        /*public EventParticipant Participants { get; private set; }*/
+        public EventType EventType { get; private set; }
 
         private readonly List<EventParticipant> _participants = new List<EventParticipant>();
         public IEnumerable<EventParticipant> Participants { get { return _participants; } }
-        public Guid EventTypeID { get; private set; }
-        public EventType EventType { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public int MaximumParticipants { get; private set; }
@@ -61,6 +55,16 @@ namespace Univent.Domain.Aggregates.EventAggregate
             MaximumParticipants = newMaximumParticipants;
             StartTime = newStartTime;
             EndTime = newEndTime;
+        }
+
+        public void AddParticipant(EventParticipant newUser)
+        {
+            _participants.Add(newUser);
+        }
+
+        public void RemoveParticipant(EventParticipant toRemoveParticipant)
+        {
+            _participants.Remove(toRemoveParticipant);
         }
     }
 }

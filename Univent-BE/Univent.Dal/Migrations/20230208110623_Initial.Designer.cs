@@ -12,7 +12,7 @@ using Univent.Dal;
 namespace Univent.Dal.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230207183031_Initial")]
+    [Migration("20230208110623_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -226,11 +226,14 @@ namespace Univent.Dal.Migrations
                     b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("UserProfileUserID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("EventID");
 
                     b.HasIndex("EventTypeID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserProfileUserID");
 
                     b.ToTable("Events");
                 });
@@ -238,12 +241,10 @@ namespace Univent.Dal.Migrations
             modelBuilder.Entity("Univent.Domain.Aggregates.EventAggregate.EventParticipant", b =>
                 {
                     b.Property<Guid>("EventID")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnOrder(0);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnOrder(1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("EventID", "UserID");
 
@@ -315,7 +316,7 @@ namespace Univent.Dal.Migrations
 
                     b.HasOne("Univent.Domain.Aggregates.UserAggregate.UserProfile", "UserProfile")
                         .WithMany("CreatedEvents")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("UserProfileUserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -329,13 +330,13 @@ namespace Univent.Dal.Migrations
                     b.HasOne("Univent.Domain.Aggregates.EventAggregate.Event", "Event")
                         .WithMany("Participants")
                         .HasForeignKey("EventID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Univent.Domain.Aggregates.UserAggregate.UserProfile", "User")
                         .WithMany("ParticipatedEvents")
                         .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Event");

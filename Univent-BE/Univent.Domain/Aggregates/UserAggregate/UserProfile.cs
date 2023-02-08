@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Univent.Domain.Aggregates.EventAggregate;
+﻿using Univent.Domain.Aggregates.EventAggregate;
 
 namespace Univent.Domain.Aggregates.UserAggregate
 {
     public class UserProfile
     {
-        [Key]
         public Guid UserID { get; private set; }
         //foreign key to Identity User (will be Identity object from Microsoft ASP.NET Identity)
         public string IdentityID { get; private set; }

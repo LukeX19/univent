@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Univent.Domain.Aggregates.EventAggregate;
-using Univent.Domain.Aggregates.UserAggregate;
 
 namespace Univent.Dal.Configurations
 {
@@ -15,6 +9,14 @@ namespace Univent.Dal.Configurations
         public void Configure(EntityTypeBuilder<EventParticipant> builder)
         {
             builder.HasKey(ep => new { ep.EventID, ep.UserID });
+            builder.HasOne(ep => ep.Event)
+                .WithMany(e => e.Participants)
+                .HasForeignKey(ep => ep.EventID)
+                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(ep => ep.User)
+                .WithMany(u => u.ParticipatedEvents)
+                .HasForeignKey(ep => ep.UserID)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

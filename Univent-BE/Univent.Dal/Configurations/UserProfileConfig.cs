@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Univent.Domain.Aggregates.UserAggregate;
 
 namespace Univent.Dal.Configurations
@@ -13,6 +8,7 @@ namespace Univent.Dal.Configurations
     {
         public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
+            builder.HasKey(userProfile => userProfile.UserID);
             builder.OwnsOne(userProfile => userProfile.BasicInfo);
         }
     }
