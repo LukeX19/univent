@@ -10,7 +10,7 @@
             public const string IdRoute = "{id}";
         }
 
-        public class Posts
+        public class Events
         {
             public const string GetById = "{id}";
         }

@@ -8,7 +8,7 @@ namespace Univent.Api.Controllers.V1
     public class EventsController : Controller
     {
         [HttpGet]
-        [Route(ApiRoutes.Posts.GetById)]
+        [Route(ApiRoutes.Events.GetById)]
         public IActionResult GetByID(int id)
         {
             return Ok();
