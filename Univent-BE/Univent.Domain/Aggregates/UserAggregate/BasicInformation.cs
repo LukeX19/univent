@@ -16,7 +16,7 @@ namespace Univent.Domain.Aggregates.UserAggregate
         {
         }
 
-        private static BasicInformation CreateBasicInformation(string firstName, string lastName, string emailAddress,
+        public static BasicInformation CreateBasicInformation(string firstName, string lastName, string emailAddress,
             string phoneNumber, DateTime dateOfBirth, string hometown)
         {
             //TO DO: add validation and error handling
