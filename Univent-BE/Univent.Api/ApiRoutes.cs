@@ -10,6 +10,11 @@
             public const string IdRoute = "{id}";
         }
 
+        public class Universities
+        {
+            public const string IdRoute = "{id}";
+        }
+
         public class Events
         {
             public const string GetById = "{id}";
