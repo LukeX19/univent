@@ -1,21 +1,15 @@
-﻿using AutoMapper;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 using Univent.Application.UserProfiles.Commands;
 using Univent.Dal;
 using Univent.Domain.Aggregates.UserAggregate;
 
 namespace Univent.Application.UserProfiles.CommandHandlers
 {
-    internal class CreateUserHandler : IRequestHandler<CreateUserCommand, UserProfile>
+    internal class CreateUserProfileHandler : IRequestHandler<CreateUserCommand, UserProfile>
     {
         private readonly DataContext _dbcontext;
 
-        public CreateUserHandler(DataContext dbcontext)
+        public CreateUserProfileHandler(DataContext dbcontext)
         {
             _dbcontext = dbcontext;
         }

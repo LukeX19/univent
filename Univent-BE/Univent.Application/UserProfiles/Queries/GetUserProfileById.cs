@@ -5,6 +5,6 @@ namespace Univent.Application.UserProfiles.Queries
 {
     public class GetUserProfileById : IRequest<UserProfile>
     {
-        public Guid UserProfileId { get; set; }
+        public Guid UserProfileID { get; set; }
     }
 }

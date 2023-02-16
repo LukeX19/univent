@@ -25,5 +25,11 @@ namespace Univent.Domain.Aggregates.UniversityAggregate
 
             return newUniversity;
         }
+
+        //Public methods start here
+        public void UpdateUniversity(string newName)
+        {
+            Name = newName;
+        }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Univent.Application.UserProfiles.Commands;
 using Univent.Dal;
 
@@ -13,6 +8,7 @@ namespace Univent.Application.UserProfiles.CommandHandlers
     internal class DeleteUserProfileHandler : IRequestHandler<DeleteUserProfileCommand>
     {
         private readonly DataContext _dbcontext;
+
         public DeleteUserProfileHandler(DataContext dbcontext)
         {
             _dbcontext = dbcontext;
@@ -20,7 +16,7 @@ namespace Univent.Application.UserProfiles.CommandHandlers
 
         public async Task<Unit> Handle(DeleteUserProfileCommand request, CancellationToken cancellationToken)
         {
-            var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.UserID == request.UserProfileId);
+            var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.UserID == request.UserProfileID);
 
             /*if (userProfile is null)
             {

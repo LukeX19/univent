@@ -46,7 +46,7 @@ namespace Univent.Api.Controllers.V1
         [Route(ApiRoutes.UserProfiles.IdRoute)]
         public async Task<IActionResult> GetUserProfileById(string id)
         {
-            var query = new GetUserProfileById { UserProfileId = Guid.Parse(id) };
+            var query = new GetUserProfileById { UserProfileID = Guid.Parse(id) };
             var response = await _mediator.Send(query);
             var userProfile = _mapper.Map<UserProfileResponse>(response);
 
@@ -69,7 +69,7 @@ namespace Univent.Api.Controllers.V1
         [Route(ApiRoutes.UserProfiles.IdRoute)]
         public async Task<IActionResult> DeleteUserProfile(string id)
         {
-            var command = new DeleteUserProfileCommand { UserProfileId = Guid.Parse(id) };
+            var command = new DeleteUserProfileCommand { UserProfileID = Guid.Parse(id) };
             var response = await _mediator.Send(command);
 
             return NoContent();
