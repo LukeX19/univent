@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Univent.Api.Contracts.Error;
 using Univent.Api.Contracts.UserProfile.Requests;
 using Univent.Api.Contracts.UserProfile.Responses;
+using Univent.Application.Enums;
 using Univent.Application.UserProfiles.Commands;
 using Univent.Application.UserProfiles.Queries;
 
@@ -11,7 +13,7 @@ namespace Univent.Api.Controllers.V1
     [ApiVersion("1.0")]
     [Route(ApiRoutes.BaseRoute)]
     [ApiController]
-    public class UserProfilesController : Controller
+    public class UserProfilesController : BaseController
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
@@ -48,6 +50,10 @@ namespace Univent.Api.Controllers.V1
         {
             var query = new GetUserProfileById { UserProfileID = Guid.Parse(id) };
             var response = await _mediator.Send(query);
+
+            if (response is null)
+                return NotFound($"No user profile was found with ID {id}!");
+
             var userProfile = _mapper.Map<UserProfileResponse>(response);
 
             return Ok(userProfile);
@@ -62,7 +68,12 @@ namespace Univent.Api.Controllers.V1
             command.UserProfileID = Guid.Parse(id);
             var response = await _mediator.Send(command);
 
-            return NoContent();
+            return response.IsError ? HandleErrorResponse(response.Errors) : NoContent();
+
+            /*if (response.IsError)
+                return HandleErrorResponse(response.Errors);
+
+            return NoContent();*/
         }
 
         [HttpDelete]

@@ -1,12 +1,14 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Univent.Application.Enums;
+using Univent.Application.Models;
 using Univent.Application.UserProfiles.Commands;
 using Univent.Dal;
 using Univent.Domain.Aggregates.UserAggregate;
 
 namespace Univent.Application.UserProfiles.CommandHandlers
 {
-    internal class UpdateUserProfileBasicInformationHandler : IRequestHandler<UpdateUserProfileBasicInformationCommand>
+    internal class UpdateUserProfileBasicInformationHandler : IRequestHandler<UpdateUserProfileBasicInformationCommand, OperationResult<UserProfile>>
     {
         private readonly DataContext _dbcontext;
 
@@ -15,19 +17,43 @@ namespace Univent.Application.UserProfiles.CommandHandlers
             _dbcontext = dbcontext;
         }
 
-        public async Task<Unit> Handle(UpdateUserProfileBasicInformationCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult<UserProfile>> Handle(UpdateUserProfileBasicInformationCommand request, CancellationToken cancellationToken)
         {
-            var userProfile = await _dbcontext.UserProfiles
-                .FirstOrDefaultAsync(up => up.UserID == request.UserProfileID);
-            var basicInformation = BasicInformation.CreateBasicInformation(request.FirstName, request.LastName, request.EmailAddress,
-                request.PhoneNumber, request.DateOfBirth, request.Hometown);
+            var result = new OperationResult<UserProfile>();
 
-            userProfile.UpdateBasicInformation(basicInformation);
+            try
+            {
+                var userProfile = await _dbcontext.UserProfiles
+                    .FirstOrDefaultAsync(up => up.UserID == request.UserProfileID);
 
-            _dbcontext.UserProfiles.Update(userProfile);
-            await _dbcontext.SaveChangesAsync();
+                if(userProfile == null)
+                {
+                    result.IsError = true;
+                    var error = new Error { Code = ErrorCodeEnum.NotFound,
+                        Message = $"No user profile was found with ID {request.UserProfileID}!" };
+                    result.Errors.Add(error);
+                    return result;
+                }
 
-            return new Unit();
+                var basicInformation = BasicInformation.CreateBasicInformation(request.FirstName, request.LastName, request.EmailAddress,
+                    request.PhoneNumber, request.DateOfBirth, request.Hometown);
+
+                userProfile.UpdateBasicInformation(basicInformation);
+
+                _dbcontext.UserProfiles.Update(userProfile);
+                await _dbcontext.SaveChangesAsync();
+
+                result.Payload = userProfile;
+                return result;
+            }
+            catch(Exception e)
+            {
+                var error = new Error { Code = ErrorCodeEnum.ServerError, Message = e.Message };
+                result.IsError = true;
+                result.Errors.Add(error);
+            }
+
+            return result;
         }
     }
 }
