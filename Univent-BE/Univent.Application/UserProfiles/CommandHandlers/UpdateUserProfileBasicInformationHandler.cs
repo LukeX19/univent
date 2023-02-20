@@ -26,7 +26,7 @@ namespace Univent.Application.UserProfiles.CommandHandlers
                 var userProfile = await _dbcontext.UserProfiles
                     .FirstOrDefaultAsync(up => up.UserID == request.UserProfileID);
 
-                if(userProfile == null)
+                if(userProfile is null)
                 {
                     result.IsError = true;
                     var error = new Error { Code = ErrorCodeEnum.NotFound,
