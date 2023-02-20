@@ -11,7 +11,6 @@ namespace Univent.Api.Filters
             if(!context.ModelState.IsValid)
             {
                 var apiError = new ErrorResponse();
-
                 apiError.StatusCode = 400;
                 apiError.StatusMessage = "Bad Request";
                 
@@ -24,7 +23,7 @@ namespace Univent.Api.Filters
 
                 apiError.Timestamp = DateTime.Now;
 
-                context.Result = new NotFoundObjectResult(apiError);
+                context.Result = new JsonResult(apiError) { StatusCode = 400 };
                 //TO DO: find a way to make sure that ASP.NET Core does
                 //not override our action result body
             }
