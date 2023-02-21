@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Univent.Api.Contracts.Error;
 using Univent.Api.Contracts.UserProfile.Requests;
 using Univent.Api.Contracts.UserProfile.Responses;
 using Univent.Api.Filters;
-using Univent.Application.Enums;
 using Univent.Application.UserProfiles.Commands;
 using Univent.Application.UserProfiles.Queries;
 
@@ -48,6 +46,7 @@ namespace Univent.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.UserProfiles.IdRoute)]
+        [ValidateGuid("id")]
         public async Task<IActionResult> GetUserProfileById(string id)
         {
             var query = new GetUserProfileById { UserProfileID = Guid.Parse(id) };
@@ -65,6 +64,7 @@ namespace Univent.Api.Controllers.V1
         [HttpPatch]
         [Route(ApiRoutes.UserProfiles.IdRoute)]
         [ValidateModel]
+        [ValidateGuid("id")]
         public async Task<IActionResult> UpdateUserProfile(string id, UserProfileCreateUpdate updatedProfile)
         {
             var command = _mapper.Map<UpdateUserProfileBasicInformationCommand>(updatedProfile);
@@ -81,6 +81,7 @@ namespace Univent.Api.Controllers.V1
 
         [HttpDelete]
         [Route(ApiRoutes.UserProfiles.IdRoute)]
+        [ValidateGuid("id")]
         public async Task<IActionResult> DeleteUserProfile(string id)
         {
             var command = new DeleteUserProfileCommand() { UserProfileID = Guid.Parse(id) };
