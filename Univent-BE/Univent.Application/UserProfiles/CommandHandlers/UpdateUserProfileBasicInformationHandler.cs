@@ -5,6 +5,7 @@ using Univent.Application.Models;
 using Univent.Application.UserProfiles.Commands;
 using Univent.Dal;
 using Univent.Domain.Aggregates.UserAggregate;
+using Univent.Domain.Exceptions;
 
 namespace Univent.Application.UserProfiles.CommandHandlers
 {
@@ -29,8 +30,11 @@ namespace Univent.Application.UserProfiles.CommandHandlers
                 if(userProfile is null)
                 {
                     result.IsError = true;
-                    var error = new Error { Code = ErrorCodeEnum.NotFound,
-                        Message = $"No user profile was found with ID {request.UserProfileID}!" };
+                    var error = new Error
+                    {
+                        Code = ErrorCodeEnum.NotFound,
+                        Message = $"No User Profile was found with ID {request.UserProfileID}!"
+                    };
                     result.Errors.Add(error);
                     return result;
                 }
@@ -46,9 +50,28 @@ namespace Univent.Application.UserProfiles.CommandHandlers
                 result.Payload = userProfile;
                 return result;
             }
-            catch(Exception e)
+            catch (UserProfileNotValidException ex)
             {
-                var error = new Error { Code = ErrorCodeEnum.ServerError, Message = e.Message };
+                result.IsError = true;
+                ex.ValidationErrors.ForEach(e =>
+                {
+                    var error = new Error
+                    {
+                        Code = ErrorCodeEnum.ValidationError,
+                        Message = $"{ex.Message}"
+                    };
+                    result.Errors.Add(error);
+                });
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                var error = new Error
+                {
+                    Code = ErrorCodeEnum.ServerError,
+                    Message = e.Message
+                };
                 result.IsError = true;
                 result.Errors.Add(error);
             }

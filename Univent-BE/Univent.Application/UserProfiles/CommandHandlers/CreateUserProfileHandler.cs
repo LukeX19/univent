@@ -1,12 +1,14 @@
 ﻿using MediatR;
+using Univent.Application.Enums;
 using Univent.Application.Models;
 using Univent.Application.UserProfiles.Commands;
 using Univent.Dal;
 using Univent.Domain.Aggregates.UserAggregate;
+using Univent.Domain.Exceptions;
 
 namespace Univent.Application.UserProfiles.CommandHandlers
 {
-    internal class CreateUserProfileHandler : IRequestHandler<CreateUserCommand, OperationResult<UserProfile>>
+    public class CreateUserProfileHandler : IRequestHandler<CreateUserCommand, OperationResult<UserProfile>>
     {
         private readonly DataContext _dbcontext;
 
@@ -19,18 +21,49 @@ namespace Univent.Application.UserProfiles.CommandHandlers
         {
             var result = new OperationResult<UserProfile>();
 
-            var basicInformation = BasicInformation.CreateBasicInformation(request.FirstName, request.LastName, request.EmailAddress, 
+            try
+            {
+                var basicInformation = BasicInformation.CreateBasicInformation(request.FirstName, request.LastName, request.EmailAddress,
                 request.PhoneNumber, request.DateOfBirth, request.Hometown);
-            var userProfile = UserProfile.CreateUserProfile(Guid.NewGuid().ToString(), basicInformation);
+                var userProfile = UserProfile.CreateUserProfile(Guid.NewGuid().ToString(), basicInformation);
 
-            _dbcontext.UserProfiles.Add(userProfile);
-            await _dbcontext.SaveChangesAsync();
+                _dbcontext.UserProfiles.Add(userProfile);
+                await _dbcontext.SaveChangesAsync();
 
-            //IsError is false by default
-            //result.IsError = false;
-            result.Payload = userProfile;
+                //IsError is false by default
+                //result.IsError = false;
+                result.Payload = userProfile;
 
-            return result;
+                return result;
+            }
+            catch(UserProfileNotValidException ex)
+            {
+                result.IsError = true;
+                ex.ValidationErrors.ForEach(e =>
+                {
+                    var error = new Error
+                    {
+                        Code = ErrorCodeEnum.ValidationError,
+                        Message = $"{ex.Message}"
+                    };
+                    result.Errors.Add(error);
+                });
+
+                return result;
+            }
+            catch(Exception e)
+            {
+                var error = new Error
+                {
+                    Code = ErrorCodeEnum.UnknownError,
+                    Message = $"{e.Message}"
+                };
+                result.IsError = true;
+                result.Errors.Add(error);
+
+                return result;
+            }
+
         }
     }
 }

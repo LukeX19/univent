@@ -31,7 +31,6 @@ namespace Univent.Domain.Aggregates.UserAggregate
         //Factory method
         public static UserProfile CreateUserProfile(string identityID, BasicInformation basicInfo)
         {
-            //TO DO: add validation and error handling
             var newUserProfile = new UserProfile
             {
                 IdentityID = identityID,

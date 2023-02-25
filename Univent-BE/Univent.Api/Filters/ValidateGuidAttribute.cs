@@ -24,7 +24,7 @@ namespace Univent.Api.Filters
             {
                 StatusCode = 400,
                 StatusMessage = "Bad Request",
-                Timestamp = DateTime.Now,
+                Timestamp = DateTime.Now
             };
             apiError.Errors.Add($"The identifier for {_key} does not have a correct GUID format");
 
