@@ -5,7 +5,7 @@ namespace Univent.Domain.Aggregates.UserAggregate
 {
     public class UserProfile
     {
-        public Guid UserID { get; private set; }
+        public Guid UserProfileID { get; private set; }
         public Guid UniversityID { get; private set; }
         //foreign key to Identity User (will be Identity object from Microsoft ASP.NET Identity)
         public string IdentityID { get; private set; }

@@ -21,7 +21,7 @@ namespace Univent.Application.UserProfiles.CommandHandlers
         {
             var result = new OperationResult<UserProfile>();
 
-            var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.UserID == request.UserProfileID);
+            var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.UserProfileID == request.UserProfileID);
 
             if(userProfile is null)
             {

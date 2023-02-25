@@ -8,7 +8,7 @@ namespace Univent.Dal.Configurations
     {
         public void Configure(EntityTypeBuilder<UserProfile> builder)
         {
-            builder.HasKey(u => u.UserID);
+            builder.HasKey(u => u.UserProfileID);
 
             builder.OwnsOne(u => u.BasicInfo);
 
