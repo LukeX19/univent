@@ -5,9 +5,9 @@ namespace Univent.Domain.Aggregates.EventAggregate
     public class Event
     {
         public Guid EventID { get; private set; }
-        public Guid UserID { get; private set; }
+        public Guid UserProfileID { get; private set; }
         public Guid EventTypeID { get; private set; }
-        public UserProfile Creator { get; private set; }
+        public UserProfile UserHost { get; private set; }
         public EventType EventType { get; private set; }
 
         private readonly List<EventParticipant> _participants = new List<EventParticipant>();
@@ -33,7 +33,7 @@ namespace Univent.Domain.Aggregates.EventAggregate
             //TO DO: add validation and error handling
             var newEvent = new Event 
             { 
-                UserID = userID,
+                UserProfileID = userID,
                 Name = name,
                 Description = description,
                 MaximumParticipants = maximumParticipants,

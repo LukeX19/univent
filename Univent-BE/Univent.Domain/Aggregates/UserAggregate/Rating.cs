@@ -3,7 +3,7 @@
     public class Rating
     {
         public Guid RatingID { get; private set; }
-        public Guid UserID { get; private set; }
+        public Guid UserProfileID { get; private set; }
         public UserProfile UserProfile { get; private set; }
         public double Value { get; private set; }
 
@@ -17,7 +17,7 @@
             //TO DO: add validation and error handling
             var newRating = new Rating
             {
-                UserID = chosenUserID,
+                UserProfileID = chosenUserID,
                 Value = value
             };
 
