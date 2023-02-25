@@ -8,7 +8,9 @@ namespace Univent.Application.Enums
 {
     public enum ErrorCodeEnum
     {
+        ValidationError = 101,
         NotFound = 404,
-        ServerError = 500
+        ServerError = 500,
+        UnknownError = 999
     }
 }

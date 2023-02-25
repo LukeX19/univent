@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using System.Collections.Generic;
-using System.Xml.Linq;
 using Univent.Domain.Aggregates.UserAggregate;
 
 namespace Univent.Domain.Validators.UserProfileValidators
@@ -24,7 +22,7 @@ namespace Univent.Domain.Validators.UserProfileValidators
                 .EmailAddress().WithMessage("Provided information does not have a correct email address format");
 
             RuleFor(info => info.DateOfBirth)
-                .NotNull().WithMessage("Date of birth is required! It is currently null")
+                //.NotNull().WithMessage("Date of birth is required! It is currently null")
                 .InclusiveBetween(new DateTime(DateTime.Now.AddYears(-26).Ticks), new DateTime(DateTime.Now.AddYears(-18).Ticks))
                 .WithMessage("Age must be between 18 and 26 years old");
         }
