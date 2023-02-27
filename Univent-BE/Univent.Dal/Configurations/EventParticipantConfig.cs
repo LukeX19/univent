@@ -8,7 +8,7 @@ namespace Univent.Dal.Configurations
     {
         public void Configure(EntityTypeBuilder<EventParticipant> builder)
         {
-            builder.HasKey(ep => new { ep.EventID, ep.UserProfileID });
+            builder.HasKey(ep => new { ep.EventID, ep.UserID });
 
             builder.HasOne(ep => ep.Event)
                 .WithMany(e => e.Participants)
@@ -17,7 +17,7 @@ namespace Univent.Dal.Configurations
 
             builder.HasOne(ep => ep.User)
                 .WithMany(u => u.ParticipatedEvents)
-                .HasForeignKey(ep => ep.UserProfileID)
+                .HasForeignKey(ep => ep.UserID)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

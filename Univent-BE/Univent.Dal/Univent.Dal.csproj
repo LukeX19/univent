@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Univent.Domain\Univent.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

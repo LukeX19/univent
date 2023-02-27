@@ -5,7 +5,7 @@ namespace Univent.Domain.Aggregates.UserAggregate
 {
     public class UserProfile
     {
-        public Guid UserProfileID { get; private set; }
+        public Guid UserID { get; private set; }
         public Guid UniversityID { get; private set; }
         //foreign key to Identity User (will be Identity object from Microsoft ASP.NET Identity)
         public string IdentityID { get; private set; }
@@ -20,6 +20,7 @@ namespace Univent.Domain.Aggregates.UserAggregate
 
         private readonly List<Rating> _ratings = new List<Rating>();
         public IEnumerable<Rating> Ratings { get { return _ratings; } }
+
         public BasicInformation BasicInfo { get; private set; }
         public DateTime CreatedDate { get; private set; }
 
@@ -29,11 +30,14 @@ namespace Univent.Domain.Aggregates.UserAggregate
         }
 
         //Factory method
-        public static UserProfile CreateUserProfile(string identityID, BasicInformation basicInfo)
+        public static UserProfile CreateUserProfile(string identityID, Guid universityID, UniversityYear year, BasicInformation basicInfo)
         {
+            //TO DO: add validation and error handling
             var newUserProfile = new UserProfile
             {
                 IdentityID = identityID,
+                UniversityID = universityID,
+                Year = year,
                 BasicInfo = basicInfo,
                 CreatedDate = DateTime.UtcNow
             };
@@ -45,6 +49,12 @@ namespace Univent.Domain.Aggregates.UserAggregate
         public void UpdateBasicInformation(BasicInformation newInformation)
         {
             BasicInfo = newInformation;
+        }
+
+        public void UpdateUniversityInformation(Guid universityID, UniversityYear year)
+        {
+            UniversityID = universityID;
+            Year = year;
         }
     }
 }
