@@ -16,7 +16,7 @@ namespace Univent.Application.UserProfiles.CommandHandlers
 
         public async Task<Unit> Handle(DeleteUserProfileCommand request, CancellationToken cancellationToken)
         {
-            var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.UserID == request.UserProfileID);
+            var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.UserProfileID == request.UserProfileID);
 
             /*if (userProfile is null)
             {

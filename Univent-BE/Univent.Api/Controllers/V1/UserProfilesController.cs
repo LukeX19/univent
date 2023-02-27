@@ -43,7 +43,7 @@ namespace Univent.Api.Controllers.V1
             var response = await _mediator.Send(command);
             var userProfile = _mapper.Map<UserProfileResponse>(response);
 
-            return CreatedAtAction(nameof(GetUserProfileById), new {id = response.UserID}, userProfile);
+            return CreatedAtAction(nameof(GetUserProfileById), new {id = response.UserProfileID}, userProfile);
         }
 
         [HttpGet]

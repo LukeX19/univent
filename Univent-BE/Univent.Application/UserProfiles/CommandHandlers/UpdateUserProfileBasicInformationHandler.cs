@@ -18,7 +18,7 @@ namespace Univent.Application.UserProfiles.CommandHandlers
         public async Task<Unit> Handle(UpdateUserProfileBasicInformationCommand request, CancellationToken cancellationToken)
         {
             var userProfile = await _dbcontext.UserProfiles
-                .FirstOrDefaultAsync(up => up.UserID == request.UserProfileID);
+                .FirstOrDefaultAsync(up => up.UserProfileID == request.UserProfileID);
             var basicInformation = BasicInformation.CreateBasicInformation(request.FirstName, request.LastName, request.EmailAddress,
                 request.PhoneNumber, request.DateOfBirth, request.Hometown);
 

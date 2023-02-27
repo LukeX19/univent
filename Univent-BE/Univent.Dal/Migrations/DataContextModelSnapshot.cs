@@ -299,7 +299,7 @@ namespace Univent.Dal.Migrations
 
             modelBuilder.Entity("Univent.Domain.Aggregates.UserAggregate.UserProfile", b =>
                 {
-                    b.Property<Guid>("UserID")
+                    b.Property<Guid>("UserProfileID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -316,7 +316,7 @@ namespace Univent.Dal.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
-                    b.HasKey("UserID");
+                    b.HasKey("UserProfileID");
 
                     b.HasIndex("UniversityID");
 
@@ -382,7 +382,7 @@ namespace Univent.Dal.Migrations
 
                     b.OwnsOne("Univent.Domain.Aggregates.UserAggregate.BasicInformation", "BasicInfo", b1 =>
                         {
-                            b1.Property<Guid>("UserProfileUserID")
+                            b1.Property<Guid>("UserProfileID")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<DateTime>("DateOfBirth")
@@ -408,12 +408,12 @@ namespace Univent.Dal.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.HasKey("UserProfileUserID");
+                            b1.HasKey("UserProfileID");
 
                             b1.ToTable("UserProfiles");
 
                             b1.WithOwner()
-                                .HasForeignKey("UserProfileUserID");
+                                .HasForeignKey("UserProfileID");
                         });
 
                     b.Navigation("BasicInfo")

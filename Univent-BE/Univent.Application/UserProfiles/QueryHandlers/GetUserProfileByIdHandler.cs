@@ -17,7 +17,7 @@ namespace Univent.Application.UserProfiles.QueryHandlers
 
         public async Task<UserProfile> Handle(GetUserProfileById request, CancellationToken cancellationToken)
         {
-            return await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.UserID == request.UserProfileID);
+            return await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.UserProfileID == request.UserProfileID);
         }
     }
 }
