@@ -15,9 +15,14 @@
             public const string IdRoute = "{id}";
         }
 
+        public class Ratings
+        {
+            public const string IdRoute = "{id}";
+        }
+
         public class Events
         {
-            public const string GetById = "{id}";
+            public const string IdRoute = "{id}";
         }
     }
 }
