@@ -5,7 +5,7 @@ namespace Univent.Domain.Aggregates.EventAggregate
     public class Event
     {
         public Guid EventID { get; private set; }
-        public Guid UserID { get; private set; }
+        public Guid UserProfileID { get; private set; }
         public Guid EventTypeID { get; private set; }
         public UserProfile Creator { get; private set; }
         public EventType EventType { get; private set; }
@@ -27,13 +27,13 @@ namespace Univent.Domain.Aggregates.EventAggregate
         }
 
         //Factory method
-        public static Event CreateEvent(Guid userID, string name, string description,
+        public static Event CreateEvent(Guid userProfileID, string name, string description,
             int maximumParticipants, DateTime startTime, DateTime endTime)
         {
             //TO DO: add validation and error handling
             var newEvent = new Event 
             { 
-                UserID = userID,
+                UserProfileID = userProfileID,
                 Name = name,
                 Description = description,
                 MaximumParticipants = maximumParticipants,

@@ -173,7 +173,7 @@ namespace Univent.Dal.Migrations
                 columns: table => new
                 {
                     EventID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserProfileID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EventTypeID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -194,8 +194,8 @@ namespace Univent.Dal.Migrations
                         principalColumn: "EventTypeID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Events_UserProfiles_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Events_UserProfiles_UserProfileID",
+                        column: x => x.UserProfileID,
                         principalTable: "UserProfiles",
                         principalColumn: "UserProfileID",
                         onDelete: ReferentialAction.Cascade);
@@ -206,15 +206,15 @@ namespace Univent.Dal.Migrations
                 columns: table => new
                 {
                     RatingID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserProfileID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Value = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ratings", x => x.RatingID);
                     table.ForeignKey(
-                        name: "FK_Ratings_UserProfiles_UserID",
-                        column: x => x.UserID,
+                        name: "FK_Ratings_UserProfiles_UserProfileID",
+                        column: x => x.UserProfileID,
                         principalTable: "UserProfiles",
                         principalColumn: "UserProfileID",
                         onDelete: ReferentialAction.Cascade);
@@ -225,11 +225,11 @@ namespace Univent.Dal.Migrations
                 columns: table => new
                 {
                     EventID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UserProfileID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventParticipants", x => new { x.EventID, x.UserID });
+                    table.PrimaryKey("PK_EventParticipants", x => new { x.EventID, x.UserProfileID });
                     table.ForeignKey(
                         name: "FK_EventParticipants_Events_EventID",
                         column: x => x.EventID,
@@ -237,17 +237,17 @@ namespace Univent.Dal.Migrations
                         principalColumn: "EventID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_EventParticipants_UserProfiles_UserID",
-                        column: x => x.UserID,
+                        name: "FK_EventParticipants_UserProfiles_UserProfileID",
+                        column: x => x.UserProfileID,
                         principalTable: "UserProfiles",
                         principalColumn: "UserProfileID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventParticipants_UserID",
+                name: "IX_EventParticipants_UserProfileID",
                 table: "EventParticipants",
-                column: "UserID");
+                column: "UserProfileID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Events_EventTypeID",
@@ -255,14 +255,14 @@ namespace Univent.Dal.Migrations
                 column: "EventTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Events_UserID",
+                name: "IX_Events_UserProfileID",
                 table: "Events",
-                column: "UserID");
+                column: "UserProfileID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ratings_UserID",
+                name: "IX_Ratings_UserProfileID",
                 table: "Ratings",
-                column: "UserID");
+                column: "UserProfileID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_UniversityID",
