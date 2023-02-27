@@ -1,5 +1,4 @@
-﻿using Univent.Domain.Exceptions;
-using Univent.Domain.Validators.UserProfileValidators;
+﻿using Univent.Domain.Aggregates.UniversityAggregate;
 
 namespace Univent.Domain.Aggregates.UserAggregate
 {
@@ -20,8 +19,7 @@ namespace Univent.Domain.Aggregates.UserAggregate
         public static BasicInformation CreateBasicInformation(string firstName, string lastName, string emailAddress,
             string phoneNumber, DateTime dateOfBirth, string hometown)
         {
-            var validator = new BasicInformationValidator();
-
+            //TO DO: add validation and error handling
             var newBasicInformation = new BasicInformation
             {
                 FirstName = firstName,
@@ -32,17 +30,7 @@ namespace Univent.Domain.Aggregates.UserAggregate
                 Hometown = hometown
             };
 
-            var validationResult = validator.Validate(newBasicInformation);
-
-            if(validationResult.IsValid)
-                return newBasicInformation;
-
-            var exception = new UserProfileNotValidException("The User Profile is not valid");
-            foreach(var error in validationResult.Errors)
-            {
-                exception.ValidationErrors.Add(error.ErrorMessage);
-            }
-            throw exception;
+            return newBasicInformation;
         }
     }
 }

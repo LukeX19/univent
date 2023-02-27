@@ -221,14 +221,14 @@ namespace Univent.Dal.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserProfileID")
+                    b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("EventID");
 
                     b.HasIndex("EventTypeID");
 
-                    b.HasIndex("UserProfileID");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Events");
                 });
@@ -238,12 +238,12 @@ namespace Univent.Dal.Migrations
                     b.Property<Guid>("EventID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserProfileID")
+                    b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("EventID", "UserProfileID");
+                    b.HasKey("EventID", "UserID");
 
-                    b.HasIndex("UserProfileID");
+                    b.HasIndex("UserID");
 
                     b.ToTable("EventParticipants");
                 });
@@ -284,7 +284,7 @@ namespace Univent.Dal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserProfileID")
+                    b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Value")
@@ -292,7 +292,7 @@ namespace Univent.Dal.Migrations
 
                     b.HasKey("RatingID");
 
-                    b.HasIndex("UserProfileID");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Ratings");
                 });
@@ -331,15 +331,15 @@ namespace Univent.Dal.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Univent.Domain.Aggregates.UserAggregate.UserProfile", "UserHost")
+                    b.HasOne("Univent.Domain.Aggregates.UserAggregate.UserProfile", "Creator")
                         .WithMany("CreatedEvents")
-                        .HasForeignKey("UserProfileID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("EventType");
+                    b.Navigation("Creator");
 
-                    b.Navigation("UserHost");
+                    b.Navigation("EventType");
                 });
 
             modelBuilder.Entity("Univent.Domain.Aggregates.EventAggregate.EventParticipant", b =>
@@ -352,7 +352,7 @@ namespace Univent.Dal.Migrations
 
                     b.HasOne("Univent.Domain.Aggregates.UserAggregate.UserProfile", "User")
                         .WithMany("ParticipatedEvents")
-                        .HasForeignKey("UserProfileID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -365,7 +365,7 @@ namespace Univent.Dal.Migrations
                 {
                     b.HasOne("Univent.Domain.Aggregates.UserAggregate.UserProfile", "UserProfile")
                         .WithMany("Ratings")
-                        .HasForeignKey("UserProfileID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

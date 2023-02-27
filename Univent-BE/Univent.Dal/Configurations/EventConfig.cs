@@ -12,9 +12,9 @@ namespace Univent.Dal.Configurations
                 .WithMany(et => et.Events)
                 .HasForeignKey(e => e.EventTypeID);
 
-            builder.HasOne(e => e.UserHost)
+            builder.HasOne(e => e.Creator)
                 .WithMany(up => up.CreatedEvents)
-                .HasForeignKey(e => e.UserProfileID);
+                .HasForeignKey(e => e.UserID);
         }
     }
 }

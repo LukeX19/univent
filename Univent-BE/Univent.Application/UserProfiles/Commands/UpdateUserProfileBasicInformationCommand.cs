@@ -1,12 +1,13 @@
 ﻿using MediatR;
-using Univent.Application.Models;
-using Univent.Domain.Aggregates.UserAggregate;
+using Univent.Domain.Aggregates.UniversityAggregate;
 
 namespace Univent.Application.UserProfiles.Commands
 {
-    public class UpdateUserProfileBasicInformationCommand : IRequest<OperationResult<UserProfile>>
+    public class UpdateUserProfileBasicInformationCommand : IRequest
     {
         public Guid UserProfileID { get; set; }
+        public Guid UniversityID { get; set; }
+        public UniversityYear Year { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }

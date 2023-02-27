@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using Univent.Api.Filters;
 
 namespace Univent.Api.Registrars
 {
@@ -8,11 +7,7 @@ namespace Univent.Api.Registrars
     {
         public void RegisterServices(WebApplicationBuilder builder)
         {
-            builder.Services.AddControllers(config =>
-            {
-                //filter registered globally
-                config.Filters.Add(typeof(GeneralExceptionHandler));
-            });
+            builder.Services.AddControllers();
 
             builder.Services.AddApiVersioning(config =>
             {

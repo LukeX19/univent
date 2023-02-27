@@ -145,7 +145,7 @@ namespace Univent.Dal.Migrations
                 name: "UserProfiles",
                 columns: table => new
                 {
-                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserProfileID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UniversityID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdentityID = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),
@@ -159,7 +159,7 @@ namespace Univent.Dal.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserProfiles", x => x.UserID);
+                    table.PrimaryKey("PK_UserProfiles", x => x.UserProfileID);
                     table.ForeignKey(
                         name: "FK_UserProfiles_Universities_UniversityID",
                         column: x => x.UniversityID,
@@ -197,7 +197,7 @@ namespace Univent.Dal.Migrations
                         name: "FK_Events_UserProfiles_UserID",
                         column: x => x.UserID,
                         principalTable: "UserProfiles",
-                        principalColumn: "UserID",
+                        principalColumn: "UserProfileID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -216,7 +216,7 @@ namespace Univent.Dal.Migrations
                         name: "FK_Ratings_UserProfiles_UserID",
                         column: x => x.UserID,
                         principalTable: "UserProfiles",
-                        principalColumn: "UserID",
+                        principalColumn: "UserProfileID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -240,7 +240,7 @@ namespace Univent.Dal.Migrations
                         name: "FK_EventParticipants_UserProfiles_UserID",
                         column: x => x.UserID,
                         principalTable: "UserProfiles",
-                        principalColumn: "UserID",
+                        principalColumn: "UserProfileID",
                         onDelete: ReferentialAction.Restrict);
                 });
 

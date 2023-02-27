@@ -10,7 +10,7 @@ namespace Univent.Dal.Configurations
         {
             builder.HasOne(r => r.UserProfile)
                 .WithMany(u => u.Ratings)
-                .HasForeignKey(r => r.UserProfileID);
+                .HasForeignKey(r => r.UserID);
         }
     }
 }
