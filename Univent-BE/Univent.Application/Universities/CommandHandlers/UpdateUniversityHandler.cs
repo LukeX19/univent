@@ -16,7 +16,7 @@ namespace Univent.Application.Universities.CommandHandlers
 
         public async Task<Unit> Handle(UpdateUniversityCommand request, CancellationToken cancellationToken)
         {
-            var university = await _dbcontext.Universities.FirstOrDefaultAsync(u => u.UniversityID== request.UniversityID);
+            var university = await _dbcontext.Universities.FirstOrDefaultAsync(u => u.UniversityID == request.UniversityID);
 
             university.UpdateUniversity(request.Name);
 

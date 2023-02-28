@@ -24,5 +24,10 @@
         {
             public const string IdRoute = "{id}";
         }
+
+        public class EventTypes
+        {
+            public const string IdRoute = "{id}";
+        }
     }
 }

@@ -23,5 +23,11 @@
 
             return newEventType;
         }
+
+        //Public methods start here
+        public void UpdateEventType(string newName)
+        {
+            Name = newName;
+        }
     }
 }
