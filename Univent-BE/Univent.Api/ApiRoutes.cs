@@ -23,6 +23,7 @@
         public class Events
         {
             public const string IdRoute = "{id}";
+            public const string CancelRoute = "{id}/cancelevent";
         }
 
         public class EventTypes

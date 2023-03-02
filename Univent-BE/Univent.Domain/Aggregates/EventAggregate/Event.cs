@@ -27,20 +27,22 @@ namespace Univent.Domain.Aggregates.EventAggregate
         }
 
         //Factory method
-        public static Event CreateEvent(Guid userProfileID, string name, string description,
+        public static Event CreateEvent(Guid userProfileID, Guid eventTypeID, string name, string description,
             int maximumParticipants, DateTime startTime, DateTime endTime)
         {
             //TO DO: add validation and error handling
-            var newEvent = new Event 
-            { 
+            var newEvent = new Event
+            {
                 UserProfileID = userProfileID,
+                EventTypeID = eventTypeID,
                 Name = name,
                 Description = description,
                 MaximumParticipants = maximumParticipants,
                 StartTime = startTime,
                 EndTime = endTime,
                 CreatedDate = DateTime.UtcNow,
-                IsCancelled = false
+                IsCancelled = false,
+                CancellationReason = default
             };
 
             return newEvent;
@@ -57,12 +59,18 @@ namespace Univent.Domain.Aggregates.EventAggregate
             EndTime = newEndTime;
         }
 
-        public void AddParticipant(EventParticipant newUser)
+        public void CancelEvent(string? cancellationReason)
+        {
+            IsCancelled = true;
+            CancellationReason = cancellationReason;
+        }
+
+        public void AddEventParticipant(EventParticipant newUser)
         {
             _participants.Add(newUser);
         }
 
-        public void RemoveParticipant(EventParticipant toRemoveParticipant)
+        public void RemoveEventParticipant(EventParticipant toRemoveParticipant)
         {
             _participants.Remove(toRemoveParticipant);
         }

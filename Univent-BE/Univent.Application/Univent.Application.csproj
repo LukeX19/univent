@@ -13,13 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Events\Commands\" />
-    <Folder Include="Events\CommandHandlers\" />
-    <Folder Include="Events\QueryHandlers\" />
-    <Folder Include="Events\Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Univent.Dal\Univent.Dal.csproj" />
     <ProjectReference Include="..\Univent.Domain\Univent.Domain.csproj" />
   </ItemGroup>
