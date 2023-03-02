@@ -26,9 +26,4 @@
     <ProjectReference Include="..\Univent.Domain\Univent.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\Event\Responses\" />
-    <Folder Include="Contracts\Event\Requests\" />
-  </ItemGroup>
-
 </Project>
