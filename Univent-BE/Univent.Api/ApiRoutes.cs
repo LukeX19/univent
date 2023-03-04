@@ -30,5 +30,12 @@
         {
             public const string IdRoute = "{id}";
         }
+
+        public class EventParticipant
+        {
+            public const string BothIdsRoute = "/Event/{id_event}/Participant/{id_participant}";
+            public const string EventIdRoute = "/Event/{id_event}/Participants";
+            public const string UserProfileIdRoute = "/Participant/{id_participant}/EnrolledEvents";
+        }
     }
 }
