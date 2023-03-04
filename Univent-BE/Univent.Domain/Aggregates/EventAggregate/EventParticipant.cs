@@ -8,5 +8,24 @@ namespace Univent.Domain.Aggregates.EventAggregate
         public Guid UserProfileID { get; private set; }
         public Event Event { get; private set; }
         public UserProfile UserProfile { get; private set; }
+
+        //Constructor
+        public EventParticipant()
+        {
+        }
+
+        //Factory method
+        public static EventParticipant CreateEventParticipant(Guid eventID, Guid userProfileID)
+        {
+            var newEventParticipant = new EventParticipant
+            {
+                 EventID = eventID,
+                 UserProfileID = userProfileID
+            };
+
+            return newEventParticipant;
+        }
+
+
     }
 }
