@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      Solution_Name: Univent-BE.sln
+      Solution_Name: api-server/Univent-BE.sln
 
     steps:
     - name: Checkout
