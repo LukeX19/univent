@@ -23,7 +23,7 @@ namespace Univent.Application.UserProfiles.CommandHandlers
 
 
             _dbcontext.UserProfiles.Add(userProfile);
-            await _dbcontext.SaveChangesAsync();
+            await _dbcontext.SaveChangesAsync(cancellationToken);
 
             return userProfile;
         }

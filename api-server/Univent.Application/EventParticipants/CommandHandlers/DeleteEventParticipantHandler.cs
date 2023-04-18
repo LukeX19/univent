@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Univent.Application.EventParticipants.Commands;
+using Univent.Application.Exceptions;
 using Univent.Dal;
+using Univent.Domain.Aggregates.EventAggregate;
 
 namespace Univent.Application.EventParticipants.CommandHandlers
 {
@@ -17,10 +19,11 @@ namespace Univent.Application.EventParticipants.CommandHandlers
         public async Task<Unit> Handle(DeleteEventParticipantCommand request, CancellationToken cancellationToken)
         {
             var eventParticipant = await _dbcontext.EventParticipants.FirstOrDefaultAsync(ep => ep.EventID == request.EventID 
-            && ep.UserProfileID == request.UserProfileID);
+            && ep.UserProfileID == request.UserProfileID, cancellationToken)
+                ?? throw new ObjectNotFoundException(nameof(EventParticipant), request.EventID, request.UserProfileID);
 
             _dbcontext.EventParticipants.Remove(eventParticipant);
-            await _dbcontext.SaveChangesAsync();
+            await _dbcontext.SaveChangesAsync(cancellationToken);
 
             return new Unit();
         }

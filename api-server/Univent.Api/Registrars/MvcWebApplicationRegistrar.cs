@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Univent.Api.Middleware;
 
 namespace Univent.Api.Registrars
 {
@@ -6,6 +7,9 @@ namespace Univent.Api.Registrars
     {
         public void RegisterPipelineComponents(WebApplication app)
         {
+            //Exception Middleware
+            app.UseMiddleware<ExceptionMiddleware>();
+
             app.UseSwagger();
 
             app.UseSwaggerUI(options =>

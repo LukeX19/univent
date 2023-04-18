@@ -17,7 +17,7 @@ namespace Univent.Application.Events.QueryHandlers
 
         public async Task<IEnumerable<Event>> Handle(GetAllEvents request, CancellationToken cancellationToken)
         {
-            return await _dbcontext.Events.ToListAsync();
+            return await _dbcontext.Events.ToListAsync(cancellationToken);
         }
     }
 }

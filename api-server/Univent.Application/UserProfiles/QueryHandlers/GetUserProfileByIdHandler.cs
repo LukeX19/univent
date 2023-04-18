@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Univent.Application.Exceptions;
 using Univent.Application.UserProfiles.Queries;
 using Univent.Dal;
 using Univent.Domain.Aggregates.UserAggregate;
@@ -17,7 +18,10 @@ namespace Univent.Application.UserProfiles.QueryHandlers
 
         public async Task<UserProfile> Handle(GetUserProfileById request, CancellationToken cancellationToken)
         {
-            return await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.UserProfileID == request.UserProfileID);
+            var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.UserProfileID == request.UserProfileID, cancellationToken)
+                ?? throw new ObjectNotFoundException(nameof(UserProfile), request.UserProfileID);
+            
+            return userProfile;
         }
     }
 }

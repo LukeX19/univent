@@ -18,7 +18,7 @@ namespace Univent.Application.UserProfiles.QueryHandlers
         public async Task<IEnumerable<UserProfile>> Handle(GetAllUserProfiles request,
             CancellationToken cancellationToken)
         {
-            return await _dbcontext.UserProfiles.ToListAsync();
+            return await _dbcontext.UserProfiles.ToListAsync(cancellationToken);
         }
     }
 }

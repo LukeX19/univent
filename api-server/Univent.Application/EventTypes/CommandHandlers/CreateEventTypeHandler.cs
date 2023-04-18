@@ -19,7 +19,7 @@ namespace Univent.Application.EventTypes.CommandHandlers
             var eventType = EventType.CreateEventType(request.Name);
 
             _dbcontext.EventTypes.Add(eventType);
-            await _dbcontext.SaveChangesAsync();
+            await _dbcontext.SaveChangesAsync(cancellationToken);
 
             return eventType;
         }

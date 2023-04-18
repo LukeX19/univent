@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Univent.Application.EventTypes.Commands;
+using Univent.Application.Exceptions;
 using Univent.Dal;
+using Univent.Domain.Aggregates.EventAggregate;
 
 namespace Univent.Application.EventTypes.CommandHandlers
 {
@@ -16,12 +18,13 @@ namespace Univent.Application.EventTypes.CommandHandlers
 
         public async Task<Unit> Handle(UpdateEventTypeCommand request, CancellationToken cancellationToken)
         {
-            var eventType = await _dbcontext.EventTypes.FirstOrDefaultAsync(et => et.EventTypeID == request.EventTypeID);
+            var eventType = await _dbcontext.EventTypes.FirstOrDefaultAsync(et => et.EventTypeID == request.EventTypeID, cancellationToken)
+                ?? throw new ObjectNotFoundException(nameof(EventType), request.EventTypeID);
 
             eventType.UpdateEventType(request.Name);
 
             _dbcontext.Update(eventType);
-            await _dbcontext.SaveChangesAsync();
+            await _dbcontext.SaveChangesAsync(cancellationToken);
 
             return new Unit();
         }
