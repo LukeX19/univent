@@ -17,7 +17,7 @@ namespace Univent.Application.Ratings.QueryHandlers
 
         public async Task<IEnumerable<Rating>> Handle(GetAllRatings request, CancellationToken cancellationToken)
         {
-            return await _dbcontext.Ratings.ToListAsync();
+            return await _dbcontext.Ratings.ToListAsync(cancellationToken);
         }
     }
 }

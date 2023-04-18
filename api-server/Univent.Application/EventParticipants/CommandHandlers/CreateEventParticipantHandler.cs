@@ -19,7 +19,7 @@ namespace Univent.Application.EventParticipants.CommandHandlers
             var eventParticipant = EventParticipant.CreateEventParticipant(request.EventID, request.UserProfileID);
             
             _dbcontext.EventParticipants.Add(eventParticipant);
-            await _dbcontext.SaveChangesAsync();
+            await _dbcontext.SaveChangesAsync(cancellationToken);
 
             return eventParticipant;
         }

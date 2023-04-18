@@ -17,7 +17,7 @@ namespace Univent.Application.Universities.QueryHandlers
 
         public async Task<IEnumerable<University>> Handle(GetAllUniversities request, CancellationToken cancellationToken)
         {
-            return await _dbcontext.Universities.ToListAsync();
+            return await _dbcontext.Universities.ToListAsync(cancellationToken);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Univent.Application.Universities.CommandHandlers
             var university = University.CreateUniversity(request.Name);
 
             _dbcontext.Universities.Add(university);
-            await _dbcontext.SaveChangesAsync();
+            await _dbcontext.SaveChangesAsync(cancellationToken);
 
             return university;
         }

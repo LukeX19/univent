@@ -18,7 +18,7 @@ namespace Univent.Application.Ratings.CommandHandlers
             var rating = Rating.CreateRating(request.UserProfileID, request.Value);
 
             _dbcontext.Ratings.Add(rating);
-            await _dbcontext.SaveChangesAsync();
+            await _dbcontext.SaveChangesAsync(cancellationToken);
 
             return rating;
         }

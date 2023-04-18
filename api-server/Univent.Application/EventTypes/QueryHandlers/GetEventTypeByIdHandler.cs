@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Univent.Application.EventTypes.Queries;
+using Univent.Application.Exceptions;
 using Univent.Dal;
 using Univent.Domain.Aggregates.EventAggregate;
 
@@ -17,7 +18,10 @@ namespace Univent.Application.EventTypes.QueryHandlers
 
         public async Task<EventType> Handle(GetEventTypeById request, CancellationToken cancellationToken)
         {
-            return await _dbcontext.EventTypes.FirstOrDefaultAsync(et => et.EventTypeID == request.EventTypeID);
+            var eventType = await _dbcontext.EventTypes.FirstOrDefaultAsync(et => et.EventTypeID == request.EventTypeID, cancellationToken)
+                ?? throw new ObjectNotFoundException(nameof(EventType), request.EventTypeID);
+
+            return eventType;
         }
     }
 }

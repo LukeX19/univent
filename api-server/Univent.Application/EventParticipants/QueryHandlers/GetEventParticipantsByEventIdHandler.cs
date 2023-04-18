@@ -17,9 +17,11 @@ namespace Univent.Application.EventParticipants.QueryHandlers
 
         public async Task<IEnumerable<EventParticipant>> Handle(GetEventParticipantsByEventId request, CancellationToken cancellationToken)
         {
-            return await _dbcontext.EventParticipants
+            var eventParticipants = await _dbcontext.EventParticipants
                 .Where(ep => ep.EventID == request.EventID)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
+        
+            return eventParticipants;
         }
     }
 }

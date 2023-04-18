@@ -20,7 +20,7 @@ namespace Univent.Application.Events.CommandHandlers
                 request.MaximumParticipants, request.StartTime, request.EndTime);
         
             _dbcontext.Events.Add(_event);
-            await _dbcontext.SaveChangesAsync();
+            await _dbcontext.SaveChangesAsync(cancellationToken);
 
             return _event;
         }

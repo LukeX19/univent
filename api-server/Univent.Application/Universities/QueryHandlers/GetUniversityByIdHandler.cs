@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Univent.Application.Exceptions;
 using Univent.Application.Universities.Queries;
 using Univent.Dal;
 using Univent.Domain.Aggregates.UniversityAggregate;
@@ -17,7 +18,10 @@ namespace Univent.Application.Universities.QueryHandlers
 
         public async Task<University> Handle(GetUniversityById request, CancellationToken cancellationToken)
         {
-            return await _dbcontext.Universities.FirstOrDefaultAsync(u => u.UniversityID == request.UniversityID);
+            var university = await _dbcontext.Universities.FirstOrDefaultAsync(u => u.UniversityID == request.UniversityID, cancellationToken)
+                ?? throw new ObjectNotFoundException(nameof(University), request.UniversityID);
+
+            return university;
         }
     }
 }
