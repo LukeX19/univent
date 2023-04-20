@@ -23,6 +23,7 @@ namespace Univent.Api.Registrars
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();

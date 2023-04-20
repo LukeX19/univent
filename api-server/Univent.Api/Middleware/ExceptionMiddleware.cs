@@ -32,12 +32,18 @@ namespace Univent.Api.Middleware
 
             switch(exception)
             {
+                //exception is IdentityUserNotFoundException or ObjectNotFoundException
+                case IdentityUserNotFoundException:
                 case ObjectNotFoundException:
                     statusCode = StatusCodes.Status404NotFound;
                     break;
 
                 case InvalidModelStateException:
                     statusCode = StatusCodes.Status400BadRequest;
+                    break;
+
+                case IdentityUserAlreadyExistsException:
+                    statusCode = StatusCodes.Status409Conflict;
                     break;
 
                 default:

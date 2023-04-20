@@ -1,41 +1,47 @@
 ﻿namespace Univent.Api
 {
-    public class ApiRoutes
+    public static class ApiRoutes
     {
         //all controllers will have the same base route string
         public const string BaseRoute = "api/v{version:apiVersion}/[controller]";
     
-        public class UserProfiles
+        public static class UserProfiles
         {
             public const string IdRoute = "{id}";
         }
 
-        public class Universities
+        public static class Universities
         {
             public const string IdRoute = "{id}";
         }
 
-        public class Ratings
+        public static class Ratings
         {
             public const string IdRoute = "{id}";
         }
 
-        public class Events
+        public static class Events
         {
             public const string IdRoute = "{id}";
             public const string CancelRoute = "{id}/cancelevent";
         }
 
-        public class EventTypes
+        public static class EventTypes
         {
             public const string IdRoute = "{id}";
         }
 
-        public class EventParticipant
+        public static class EventParticipant
         {
             public const string BothIdsRoute = "/Event/{id_event}/Participant/{id_participant}";
             public const string EventIdRoute = "/Event/{id_event}/Participants";
             public const string UserProfileIdRoute = "/Participant/{id_participant}/EnrolledEvents";
+        }
+
+        public static class Identity
+        {
+            public const string Login = "login";
+            public const string Registration = "registration";
         }
     }
 }
