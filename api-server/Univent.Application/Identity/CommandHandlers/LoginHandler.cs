@@ -1,14 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using Univent.Application.Exceptions;
 using Univent.Application.Identity.Commands;
-using Univent.Application.Options;
+using Univent.Application.Services;
 using Univent.Dal;
 
 namespace Univent.Application.Identity.CommandHandlers
@@ -17,13 +14,13 @@ namespace Univent.Application.Identity.CommandHandlers
     {
         private readonly DataContext _dbcontext;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly JwtSettings _jwtSettings;
+        private readonly IdentityService _identityService;
 
-        public LoginHandler(DataContext dbcontext, UserManager<IdentityUser> userManager, IOptions<JwtSettings> jwtSettings)
+        public LoginHandler(DataContext dbcontext, UserManager<IdentityUser> userManager, IdentityService identityService)
         {
             _dbcontext = dbcontext;
             _userManager = userManager;
-            _jwtSettings = jwtSettings.Value;
+            _identityService = identityService;
         }
 
         public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -41,28 +38,17 @@ namespace Univent.Application.Identity.CommandHandlers
             }
 
             var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.IdentityID == identityUser.Id);
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_jwtSettings.SigningKey);
-            var tokenDescriptor = new SecurityTokenDescriptor()
+            var claimsIdentity = new ClaimsIdentity(new Claim[]
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(JwtRegisteredClaimNames.Sub, identityUser.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Email, identityUser.Email),
-                    new Claim("IdentityId", identityUser.Id),
-                    new Claim("UserProfileId", userProfile.UserProfileID.ToString())
-                }),
-                Expires = DateTime.Now.AddHours(2),
-                Audience = _jwtSettings.Audiences[0],
-                Issuer = _jwtSettings.Issuer,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256Signature)
-            };
+                new Claim(JwtRegisteredClaimNames.Sub, identityUser.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, identityUser.Email),
+                new Claim("IdentityId", identityUser.Id),
+                new Claim("UserProfileId", userProfile.UserProfileID.ToString())
+            });
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            var token = _identityService.CreateSecurityToken(claimsIdentity);
+            return _identityService.WriteToken(token);
         }
     }
 }
