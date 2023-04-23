@@ -46,6 +46,11 @@ namespace Univent.Api.Middleware
                     statusCode = StatusCodes.Status409Conflict;
                     break;
 
+                case EventUpdateNotPossibleException:
+                case EventDeleteNotPossibleException:
+                    statusCode = StatusCodes.Status403Forbidden;
+                    break;
+
                 default:
                     break;
             }

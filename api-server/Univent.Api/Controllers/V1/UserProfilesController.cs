@@ -35,20 +35,6 @@ namespace Univent.Api.Controllers.V1
             return Ok(profiles);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateUserProfile([FromBody] UserProfileCreateUpdate profile)
-        {
-            var command = _mapper.Map<CreateUserCommand>(profile);
-
-            command.UniversityID = profile.UniversityID;
-            command.Year = profile.Year;
-
-            var response = await _mediator.Send(command);
-            var userProfile = _mapper.Map<UserProfileResponse>(response);
-
-            return CreatedAtAction(nameof(GetUserProfileById), new {id = response.UserProfileID}, userProfile);
-        }
-
         [HttpGet]
         [Route(ApiRoutes.UserProfiles.IdRoute)]
         public async Task<IActionResult> GetUserProfileById(string id)
