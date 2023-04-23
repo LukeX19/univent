@@ -5,6 +5,7 @@ namespace Univent.Application.Events.Commands
     public class UpdateEventCommand : IRequest
     {
         public Guid EventID { get; set; }
+        public Guid UserProfileID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int MaximumParticipants { get; set; }

@@ -21,6 +21,11 @@ namespace Univent.Application.Events.CommandHandlers
             var _event = await _dbcontext.Events.FirstOrDefaultAsync(e => e.EventID == request.EventID, cancellationToken)
                 ?? throw new ObjectNotFoundException(nameof(Event), request.EventID);
 
+            if (_event.UserProfileID != request.UserProfileID)
+            {
+                throw new EventDeleteNotPossibleException();
+            }
+
             _dbcontext.Events.Remove(_event);
             await _dbcontext.SaveChangesAsync(cancellationToken);
 
