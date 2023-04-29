@@ -35,7 +35,7 @@
         {
             public const string BothIdsRoute = "/Event/{id_event}/Participant/{id_participant}";
             public const string EventIdRoute = "/Event/{id_event}/Participants";
-            public const string UserProfileIdRoute = "/Participant/{id_participant}/EnrolledEvents";
+            public const string UserProfileIdRoute = "/MyProfile/EnrolledEvents";
         }
 
         public static class Identity
