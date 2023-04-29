@@ -1,8 +1,11 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Univent.Api.Contracts.EventParticipant.Requests;
 using Univent.Api.Contracts.EventParticipant.Responses;
+using Univent.Api.Extensions;
 using Univent.Application.EventParticipants.Commands;
 using Univent.Application.EventParticipants.Queries;
 
@@ -11,6 +14,7 @@ namespace Univent.Api.Controllers.V1
     [ApiVersion("1.0")]
     [Route(ApiRoutes.BaseRoute)]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class EventParticipantController : Controller
     {
         private readonly IMediator _mediator;
@@ -35,7 +39,13 @@ namespace Univent.Api.Controllers.V1
         [HttpPost]
         public async Task<IActionResult> CreateEventParticipant(EventParticipantCreate evParticipant)
         {
-            var command = _mapper.Map<CreateEventParticipantCommand>(evParticipant);
+            var userProfileId = HttpContext.GetUserProfileIdClaimValue();
+
+            var command = new CreateEventParticipantCommand()
+            {
+                EventID = evParticipant.EventID,
+                UserProfileID = userProfileId
+            };
             var response = await _mediator.Send(command);
             var eventParticipant = _mapper.Map<EventParticipantResponse>(response);
 
@@ -43,6 +53,7 @@ namespace Univent.Api.Controllers.V1
                 new { id_event = response.EventID, id_participant = response.UserProfileID }, eventParticipant);
         }
 
+        //might not be needed
         [HttpGet]
         [Route(ApiRoutes.EventParticipant.BothIdsRoute)]
         public async Task<IActionResult> GetEventParticipantByBothIds(Guid id_event, Guid id_participant)
@@ -81,13 +92,15 @@ namespace Univent.Api.Controllers.V1
         }
 
         [HttpDelete]
-        [Route(ApiRoutes.EventParticipant.BothIdsRoute)]
-        public async Task<IActionResult> DeleteEventParticipant(Guid id_event, Guid id_participant)
+        [Route(ApiRoutes.EventParticipant.EventIdRoute)]
+        public async Task<IActionResult> DeleteEventParticipant(Guid id_event)
         {
+            var userProfileId = HttpContext.GetUserProfileIdClaimValue();
+
             var command = new DeleteEventParticipantCommand
             {
                 EventID = id_event,
-                UserProfileID = id_participant
+                UserProfileID = userProfileId
             };
             var response = await _mediator.Send(command);
 
