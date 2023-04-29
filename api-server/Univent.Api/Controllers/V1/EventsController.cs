@@ -59,9 +59,9 @@ namespace Univent.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.Events.IdRoute)]
-        public async Task<IActionResult> GetEventById(string id)
+        public async Task<IActionResult> GetEventById(Guid id)
         {
-            var query = new GetEventById { EventID = Guid.Parse(id) };
+            var query = new GetEventById { EventID = id };
             var response = await _mediator.Send(query);
             var _event = _mapper.Map<EventResponse>(response);
 
@@ -70,14 +70,14 @@ namespace Univent.Api.Controllers.V1
 
         [HttpPatch]
         [Route(ApiRoutes.Events.IdRoute)]
-        public async Task<IActionResult> UpdateEvent(string id, EventUpdate updatedEvent)
+        public async Task<IActionResult> UpdateEvent(Guid id, EventUpdate updatedEvent)
         {
             var userProfileId = HttpContext.GetUserProfileIdClaimValue();
 
             var command = new UpdateEventCommand()
             {
                 UserProfileID = userProfileId,
-                EventID = Guid.Parse(id),
+                EventID = id,
                 Name = updatedEvent.Name,
                 Description = updatedEvent.Description,
                 MaximumParticipants = updatedEvent.MaximumParticipants,
@@ -91,14 +91,14 @@ namespace Univent.Api.Controllers.V1
 
         [HttpPatch]
         [Route(ApiRoutes.Events.CancelRoute)]
-        public async Task<IActionResult> CancelEvent(string id, EventUpdate_CancelOption cancelledEvent)
+        public async Task<IActionResult> CancelEvent(Guid id, EventUpdate_CancelOption cancelledEvent)
         {
             var userProfileId = HttpContext.GetUserProfileIdClaimValue();
 
             var command = new UpdateEvent_CancelOptionCommand()
             {
                 UserProfileID = userProfileId,
-                EventID = Guid.Parse(id),
+                EventID = id,
                 CancellationReason = cancelledEvent.CancellationReason,
             };
             var response = await _mediator.Send(command);
@@ -108,10 +108,10 @@ namespace Univent.Api.Controllers.V1
 
         [HttpDelete]
         [Route(ApiRoutes.Events.IdRoute)]
-        public async Task<IActionResult> DeleteEvent(string id)
+        public async Task<IActionResult> DeleteEvent(Guid id)
         {
             var userProfileId = HttpContext.GetUserProfileIdClaimValue();
-            var command = new DeleteEventCommand { EventID = Guid.Parse(id), UserProfileID = userProfileId };
+            var command = new DeleteEventCommand { EventID = id, UserProfileID = userProfileId };
             var response = await _mediator.Send(command);
 
             return NoContent();
