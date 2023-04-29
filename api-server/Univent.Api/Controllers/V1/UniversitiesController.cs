@@ -44,9 +44,9 @@ namespace Univent.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.Universities.IdRoute)]
-        public async Task<IActionResult> GetUniversityById(string id)
+        public async Task<IActionResult> GetUniversityById(Guid id)
         {
-            var query = new GetUniversityById { UniversityID = Guid.Parse(id) };
+            var query = new GetUniversityById { UniversityID = id };
             var response = await _mediator.Send(query);
             var university = _mapper.Map<UniversityResponse>(response);
 
@@ -55,10 +55,10 @@ namespace Univent.Api.Controllers.V1
 
         [HttpPatch]
         [Route(ApiRoutes.Universities.IdRoute)]
-        public async Task<IActionResult> UpdateUniversity(string id, UniversityUpdate updatedUniversity)
+        public async Task<IActionResult> UpdateUniversity(Guid id, UniversityUpdate updatedUniversity)
         {
             var command = _mapper.Map<UpdateUniversityCommand>(updatedUniversity);
-            command.UniversityID = Guid.Parse(id);
+            command.UniversityID = id;
             var response = await _mediator.Send(command);
 
             return NoContent();
@@ -66,9 +66,9 @@ namespace Univent.Api.Controllers.V1
 
         [HttpDelete]
         [Route(ApiRoutes.Universities.IdRoute)]
-        public async Task<IActionResult> DeleteUniversity(string id)
+        public async Task<IActionResult> DeleteUniversity(Guid id)
         {
-            var command = new DeleteUniversityCommand { UniversityID = Guid.Parse(id) };
+            var command = new DeleteUniversityCommand { UniversityID = id };
             var response = await _mediator.Send(command);
 
             return NoContent();

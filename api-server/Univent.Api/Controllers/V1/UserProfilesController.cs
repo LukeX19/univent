@@ -37,9 +37,9 @@ namespace Univent.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.UserProfiles.IdRoute)]
-        public async Task<IActionResult> GetUserProfileById(string id)
+        public async Task<IActionResult> GetUserProfileById(Guid id)
         {
-            var query = new GetUserProfileById { UserProfileID = Guid.Parse(id) };
+            var query = new GetUserProfileById { UserProfileID = id };
             var response = await _mediator.Send(query);
             var userProfile = _mapper.Map<UserProfileResponse>(response);
 
@@ -49,10 +49,10 @@ namespace Univent.Api.Controllers.V1
         //chose HttpPatch because we update only a part of the resource, not the whole resource
         [HttpPatch]
         [Route(ApiRoutes.UserProfiles.IdRoute)]
-        public async Task<IActionResult> UpdateUserProfile(string id, UserProfileCreateUpdate updatedProfile)
+        public async Task<IActionResult> UpdateUserProfile(Guid id, UserProfileCreateUpdate updatedProfile)
         {
             var command = _mapper.Map<UpdateUserProfileBasicInformationCommand>(updatedProfile);
-            command.UserProfileID = Guid.Parse(id);
+            command.UserProfileID = id;
             var response = await _mediator.Send(command);
 
             return NoContent();
@@ -60,9 +60,9 @@ namespace Univent.Api.Controllers.V1
 
         [HttpDelete]
         [Route(ApiRoutes.UserProfiles.IdRoute)]
-        public async Task<IActionResult> DeleteUserProfile(string id)
+        public async Task<IActionResult> DeleteUserProfile(Guid id)
         {
-            var command = new DeleteUserProfileCommand { UserProfileID = Guid.Parse(id) };
+            var command = new DeleteUserProfileCommand { UserProfileID = id };
             var response = await _mediator.Send(command);
 
             return NoContent();

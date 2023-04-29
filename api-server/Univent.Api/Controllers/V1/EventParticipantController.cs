@@ -45,12 +45,12 @@ namespace Univent.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.EventParticipant.BothIdsRoute)]
-        public async Task<IActionResult> GetEventParticipantByBothIds(string id_event, string id_participant)
+        public async Task<IActionResult> GetEventParticipantByBothIds(Guid id_event, Guid id_participant)
         {
             var query = new GetEventParticipantByBothIds
             {
-                EventID = Guid.Parse(id_event),
-                UserProfileID = Guid.Parse(id_participant)
+                EventID = id_event,
+                UserProfileID = id_participant
             };
             var response = await _mediator.Send(query);
             var evParticipant = _mapper.Map<EventParticipantResponse>(response);
@@ -60,9 +60,9 @@ namespace Univent.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.EventParticipant.EventIdRoute)]
-        public async Task<IActionResult> GetEventParticipantsByEventId(string id_event)
+        public async Task<IActionResult> GetEventParticipantsByEventId(Guid id_event)
         {
-            var query = new GetEventParticipantsByEventId { EventID = Guid.Parse(id_event) };
+            var query = new GetEventParticipantsByEventId { EventID = id_event };
             var response = await _mediator.Send(query);
             var eventParticipants = _mapper.Map<List<EventParticipantResponse>>(response);
 
@@ -71,9 +71,9 @@ namespace Univent.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.EventParticipant.UserProfileIdRoute)]
-        public async Task<IActionResult> GetEventsByParticipantId(string id_participant)
+        public async Task<IActionResult> GetEventsByParticipantId(Guid id_participant)
         {
-            var query = new GetEventsByParticipantId { UserProfileID= Guid.Parse(id_participant) };
+            var query = new GetEventsByParticipantId { UserProfileID= id_participant };
             var response = await _mediator.Send(query);
             var eventsForUser = _mapper.Map<List<EventParticipantResponse>>(response);
 
@@ -82,12 +82,12 @@ namespace Univent.Api.Controllers.V1
 
         [HttpDelete]
         [Route(ApiRoutes.EventParticipant.BothIdsRoute)]
-        public async Task<IActionResult> DeleteEventParticipant(string id_event, string id_participant)
+        public async Task<IActionResult> DeleteEventParticipant(Guid id_event, Guid id_participant)
         {
             var command = new DeleteEventParticipantCommand
             {
-                EventID = Guid.Parse(id_event),
-                UserProfileID = Guid.Parse(id_participant)
+                EventID = id_event,
+                UserProfileID = id_participant
             };
             var response = await _mediator.Send(command);
 

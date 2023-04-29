@@ -44,9 +44,9 @@ namespace Univent.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.Ratings.IdRoute)]
-        public async Task<IActionResult> GetRatingById(string id)
+        public async Task<IActionResult> GetRatingById(Guid id)
         {
-            var query = new GetRatingById { RatingID = Guid.Parse(id) };
+            var query = new GetRatingById { RatingID = id };
             var response = await _mediator.Send(query);
             var rating = _mapper.Map<RatingResponse>(response);
 
@@ -55,9 +55,9 @@ namespace Univent.Api.Controllers.V1
 
         [HttpDelete]
         [Route(ApiRoutes.Ratings.IdRoute)]
-        public async Task<IActionResult> DeleteRating(string id)
+        public async Task<IActionResult> DeleteRating(Guid id)
         {
-            var command = new DeleteRatingCommand { RatingID = Guid.Parse(id) };
+            var command = new DeleteRatingCommand { RatingID = id };
             var response = await _mediator.Send(command);
 
             return NoContent();

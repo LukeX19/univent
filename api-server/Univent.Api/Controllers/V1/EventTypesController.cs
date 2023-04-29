@@ -44,9 +44,9 @@ namespace Univent.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.EventTypes.IdRoute)]
-        public async Task<IActionResult> GetEventTypeById(string id)
+        public async Task<IActionResult> GetEventTypeById(Guid id)
         {
-            var query = new GetEventTypeById { EventTypeID = Guid.Parse(id) };
+            var query = new GetEventTypeById { EventTypeID = id };
             var response = await _mediator.Send(query);
             var eventType = _mapper.Map<EventTypeResponse>(response);
 
@@ -55,10 +55,10 @@ namespace Univent.Api.Controllers.V1
 
         [HttpPatch]
         [Route(ApiRoutes.EventTypes.IdRoute)]
-        public async Task<IActionResult> UpdateEventType(string id, EventTypeUpdate updatedEventType)
+        public async Task<IActionResult> UpdateEventType(Guid id, EventTypeUpdate updatedEventType)
         {
             var command = _mapper.Map<UpdateEventTypeCommand>(updatedEventType);
-            command.EventTypeID = Guid.Parse(id);
+            command.EventTypeID = id;
             var response = await _mediator.Send(command);
 
             return NoContent();
@@ -66,9 +66,9 @@ namespace Univent.Api.Controllers.V1
 
         [HttpDelete]
         [Route(ApiRoutes.EventTypes.IdRoute)]
-        public async Task<IActionResult> DeleteEventType(string id)
+        public async Task<IActionResult> DeleteEventType(Guid id)
         {
-            var command = new DeleteEventTypeCommand { EventTypeID = Guid.Parse(id) };
+            var command = new DeleteEventTypeCommand { EventTypeID = id };
             var response = await _mediator.Send(command);
 
             return NoContent();
