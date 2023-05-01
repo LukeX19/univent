@@ -4,8 +4,8 @@ namespace Univent.Api.Contracts.Identity
 {
     public class Login
     {
-        [EmailAddress]
         [Required]
+        [EmailAddress]
         public string Username { get; set; }
 
         [Required]
