@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Univent.Api.Contracts.EventType.Requests;
 using Univent.Api.Contracts.EventType.Responses;
@@ -11,6 +13,7 @@ namespace Univent.Api.Controllers.V1
     [ApiVersion("1.0")]
     [Route(ApiRoutes.BaseRoute)]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class EventTypesController : Controller
     {
         private readonly IMediator _mediator;
@@ -33,6 +36,7 @@ namespace Univent.Api.Controllers.V1
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> CreateEventType(EventTypeCreate evType)
         {
             var command = _mapper.Map<CreateEventTypeCommand>(evType);
@@ -55,6 +59,7 @@ namespace Univent.Api.Controllers.V1
 
         [HttpPatch]
         [Route(ApiRoutes.EventTypes.IdRoute)]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> UpdateEventType(Guid id, EventTypeUpdate updatedEventType)
         {
             var command = _mapper.Map<UpdateEventTypeCommand>(updatedEventType);
@@ -66,6 +71,7 @@ namespace Univent.Api.Controllers.V1
 
         [HttpDelete]
         [Route(ApiRoutes.EventTypes.IdRoute)]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> DeleteEventType(Guid id)
         {
             var command = new DeleteEventTypeCommand { EventTypeID = id };

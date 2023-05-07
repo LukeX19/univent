@@ -65,13 +65,16 @@ namespace Univent.Application.Identity.CommandHandlers
                 throw new UserProfileCreationFailedException();
             }
 
+            await _userManager.AddToRoleAsync(identityUser, "User");
+
             var claimsIdentity = new ClaimsIdentity(new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, identityUser.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, identityUser.Email),
                 new Claim("IdentityId", identityUser.Id),
-                new Claim("UserProfileId", userProfile.UserProfileID.ToString())
+                new Claim("UserProfileId", userProfile.UserProfileID.ToString()),
+                new Claim("Role", "User")
             });
 
             var token = _identityService.CreateSecurityToken(claimsIdentity);
