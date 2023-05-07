@@ -8,7 +8,7 @@ namespace Univent.Dal.Configurations
     {
         public void Configure(EntityTypeBuilder<IdentityUserRole<string>> builder)
         {
-            builder.HasKey(iur => iur.RoleId);
+            builder.HasKey(iur => new { iur.UserId, iur.RoleId });
         }
     }
 }

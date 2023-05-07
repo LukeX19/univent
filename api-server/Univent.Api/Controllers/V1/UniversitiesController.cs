@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Univent.Api.Contracts.University.Requests;
 using Univent.Api.Contracts.University.Responses;
@@ -11,6 +13,7 @@ namespace Univent.Api.Controllers.V1
     [ApiVersion("1.0")]
     [Route(ApiRoutes.BaseRoute)]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UniversitiesController : Controller
     {
         private readonly IMediator _mediator;
@@ -33,6 +36,7 @@ namespace Univent.Api.Controllers.V1
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> CreateUniversity([FromBody] UniversityCreate univ)
         {
             var command = _mapper.Map<CreateUniversityCommand>(univ);
@@ -55,6 +59,7 @@ namespace Univent.Api.Controllers.V1
 
         [HttpPatch]
         [Route(ApiRoutes.Universities.IdRoute)]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> UpdateUniversity(Guid id, UniversityUpdate updatedUniversity)
         {
             var command = _mapper.Map<UpdateUniversityCommand>(updatedUniversity);
@@ -66,6 +71,7 @@ namespace Univent.Api.Controllers.V1
 
         [HttpDelete]
         [Route(ApiRoutes.Universities.IdRoute)]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> DeleteUniversity(Guid id)
         {
             var command = new DeleteUniversityCommand { UniversityID = id };

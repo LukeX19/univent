@@ -16,11 +16,11 @@ namespace Univent.Api.Registrars
             builder.Services.Configure<JwtSettings>(jwtSection);
 
             builder.Services
-                .AddAuthentication(a =>
+                .AddAuthentication(options =>
                 {
-                    a.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    a.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
                 .AddJwtBearer(jwt =>
                 {
@@ -42,6 +42,14 @@ namespace Univent.Api.Registrars
                     jwt.Audience = jwtSettings.Audiences[0];
                     jwt.ClaimsIssuer = jwtSettings.Issuer;
                 });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy =>
+                {
+                    policy.RequireClaim("Role", "Admin");
+                });
+            });
         }
     }
 }

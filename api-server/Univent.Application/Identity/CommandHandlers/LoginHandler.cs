@@ -37,14 +37,16 @@ namespace Univent.Application.Identity.CommandHandlers
                 throw new IdentityUserIncorrectPasswordException(request.Username);
             }
 
-            var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.IdentityID == identityUser.Id);
+            var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.IdentityID == identityUser.Id, cancellationToken);
+            var role = await _userManager.GetRolesAsync(identityUser);
             var claimsIdentity = new ClaimsIdentity(new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, identityUser.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, identityUser.Email),
                 new Claim("IdentityId", identityUser.Id),
-                new Claim("UserProfileId", userProfile.UserProfileID.ToString())
+                new Claim("UserProfileId", userProfile.UserProfileID.ToString()),
+                new Claim("Role", role.FirstOrDefault())
             });
 
             var token = _identityService.CreateSecurityToken(claimsIdentity);
