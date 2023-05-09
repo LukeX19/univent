@@ -23,7 +23,7 @@
         public static class Events
         {
             public const string IdRoute = "{id}";
-            public const string CancelRoute = "{id}/cancelevent";
+            public const string CancelRoute = "{id}/CancelEvent";
         }
 
         public static class EventTypes
@@ -33,15 +33,15 @@
 
         public static class EventParticipant
         {
-            public const string BothIdsRoute = "/Event/{id_event}/Participant/{id_participant}";
-            public const string EventIdRoute = "/Event/{id_event}/Participants";
-            public const string UserProfileIdRoute = "/MyProfile/EnrolledEvents";
+            public const string BothIdsRoute = "Event/{id_event}/User/{id_participant}";
+            public const string EventIdRoute = "Event/{id_event}/Participants";
+            public const string UserProfileIdRoute = "User/{id_participant}/EnrolledEvents";
         }
 
         public static class Identity
         {
-            public const string Login = "login";
-            public const string Registration = "registration";
+            public const string Login = "Login";
+            public const string Registration = "Registration";
         }
     }
 }

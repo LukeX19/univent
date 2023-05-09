@@ -23,6 +23,8 @@ namespace Univent.Api.Registrars
 
             app.UseHttpsRedirection();
 
+            app.UseCors();
+
             app.UseAuthentication();
             app.UseAuthorization();
 

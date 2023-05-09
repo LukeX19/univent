@@ -7,6 +7,16 @@ namespace Univent.Api.Registrars
     {
         public void RegisterServices(WebApplicationBuilder builder)
         {
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+
             builder.Services.AddControllers();
 
             builder.Services.AddApiVersioning(config =>
