@@ -84,7 +84,7 @@ namespace Univent.Api.Controllers.V1
         [Route(ApiRoutes.EventParticipant.UserProfileIdRoute)]
         public async Task<IActionResult> GetEventsByParticipantId(Guid id_participant)
         {
-            var query = new GetEventsByParticipantId { UserProfileID= id_participant };
+            var query = new GetEventsByParticipantId { UserProfileID = id_participant };
             var response = await _mediator.Send(query);
             var eventsForUser = _mapper.Map<List<EventParticipantResponse>>(response);
 
