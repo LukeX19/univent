@@ -52,15 +52,17 @@ namespace Univent.Dal.Migrations
                 BasicInfo_PhoneNumber = "9999999999",
                 BasicInfo_DateOfBirth = DateTime.UtcNow.AddYears(-40),
                 BasicInfo_Hometown = "AdminCity",
-                CreatedDate = DateTime.UtcNow
+                BasicInfo_ProfilePicture = "",
+                CreatedDate = DateTime.UtcNow,
+                isAccountConfirmed = true
             };
             migrationBuilder.InsertData(
                 table: "UserProfiles",
-                columns: new[] { "UserProfileID", "UniversityID", "IdentityID", "Year", "BasicInfo_FirstName", "BasicInfo_LastName",
-                    "BasicInfo_EmailAddress", "BasicInfo_PhoneNumber", "BasicInfo_DateOfBirth", "BasicInfo_Hometown", "CreatedDate" },
-                values: new object[] { adminProfile.UserProfileID, adminProfile.UniversityID, adminProfile.IdentityID, adminProfile.Year, 
-                    adminProfile.BasicInfo_FirstName, adminProfile.BasicInfo_LastName, adminProfile.BasicInfo_EmailAddress, adminProfile.BasicInfo_PhoneNumber,
-                    adminProfile.BasicInfo_DateOfBirth, adminProfile.BasicInfo_Hometown, adminProfile.CreatedDate });
+                columns: new[] { "UserProfileID", "UniversityID", "IdentityID", "Year", "BasicInfo_FirstName", "BasicInfo_LastName", "BasicInfo_EmailAddress",
+                    "BasicInfo_PhoneNumber", "BasicInfo_DateOfBirth", "BasicInfo_Hometown", "CreatedDate", "BasicInfo_ProfilePicture", "isAccountConfirmed" },
+                values: new object[] { adminProfile.UserProfileID, adminProfile.UniversityID, adminProfile.IdentityID, adminProfile.Year, adminProfile.BasicInfo_FirstName,
+                    adminProfile.BasicInfo_LastName, adminProfile.BasicInfo_EmailAddress, adminProfile.BasicInfo_PhoneNumber, adminProfile.BasicInfo_DateOfBirth,
+                    adminProfile.BasicInfo_Hometown, adminProfile.CreatedDate, adminProfile.BasicInfo_ProfilePicture, adminProfile.isAccountConfirmed });
 
             //Add the newly created user to Admin role
             migrationBuilder.InsertData(

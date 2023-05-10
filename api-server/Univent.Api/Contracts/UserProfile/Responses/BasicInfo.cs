@@ -8,5 +8,6 @@
         public string PhoneNumber { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Hometown { get; set; }
+        public string ProfilePicture { get; set; }
     }
 }

@@ -38,5 +38,8 @@ namespace Univent.Api.Contracts.Identity
         [Required]
         [StringLength(50, MinimumLength = 3)]
         public string Hometown { get; set; }
+
+        [Required]
+        public string ProfilePicture { get; set; }
     }
 }
