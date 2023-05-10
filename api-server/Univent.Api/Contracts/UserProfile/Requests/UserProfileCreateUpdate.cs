@@ -36,7 +36,6 @@ namespace Univent.Api.Contracts.UserProfile.Requests
         [StringLength(50, MinimumLength = 3)]
         public string Hometown { get; set; }
 
-        [Required]
         public string ProfilePicture { get; set; }
     }
 }
