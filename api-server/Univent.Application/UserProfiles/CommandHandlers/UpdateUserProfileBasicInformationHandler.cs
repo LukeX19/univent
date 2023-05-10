@@ -21,7 +21,7 @@ namespace Univent.Application.UserProfiles.CommandHandlers
             var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.UserProfileID == request.UserProfileID, cancellationToken)
                 ?? throw new ObjectNotFoundException(nameof(UserProfile), request.UserProfileID);
             var basicInformation = BasicInformation.CreateBasicInformation(request.FirstName, request.LastName, request.EmailAddress,
-                request.PhoneNumber, request.DateOfBirth, request.Hometown);
+                request.PhoneNumber, request.DateOfBirth, request.Hometown, request.ProfilePicture);
 
             userProfile.UpdateBasicInformation(basicInformation);
             userProfile.UpdateUniversityInformation(request.UniversityID, request.Year);

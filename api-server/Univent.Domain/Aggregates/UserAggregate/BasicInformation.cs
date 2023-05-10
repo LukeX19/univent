@@ -10,6 +10,7 @@ namespace Univent.Domain.Aggregates.UserAggregate
         public string PhoneNumber { get; private set; }
         public DateTime DateOfBirth { get; private set; }
         public string Hometown { get; private set; }
+        public string ProfilePicture { get; private set; }
 
         //Constructor
         private BasicInformation()
@@ -17,9 +18,8 @@ namespace Univent.Domain.Aggregates.UserAggregate
         }
 
         public static BasicInformation CreateBasicInformation(string firstName, string lastName, string emailAddress,
-            string phoneNumber, DateTime dateOfBirth, string hometown)
+            string phoneNumber, DateTime dateOfBirth, string hometown, string profilePicture)
         {
-            //TO DO: add validation and error handling
             var newBasicInformation = new BasicInformation
             {
                 FirstName = firstName,
@@ -27,7 +27,8 @@ namespace Univent.Domain.Aggregates.UserAggregate
                 EmailAddress = emailAddress,
                 PhoneNumber = phoneNumber,
                 DateOfBirth = dateOfBirth,
-                Hometown = hometown
+                Hometown = hometown,
+                ProfilePicture = profilePicture
             };
 
             return newBasicInformation;

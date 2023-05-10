@@ -1,5 +1,4 @@
-﻿using Univent.Domain.Aggregates.EventAggregate;
-using Univent.Domain.Aggregates.UniversityAggregate;
+﻿using Univent.Domain.Aggregates.UniversityAggregate;
 using Univent.Domain.Aggregates.UserAggregate;
 
 namespace Univent.Api.Contracts.UserProfile.Responses
@@ -11,5 +10,6 @@ namespace Univent.Api.Contracts.UserProfile.Responses
         public UniversityYear Year { get; set; }
         public BasicInformation BasicInfo { get; set; }
         public DateTime CreatedDate { get; set; }
+        public bool isAccountConfirmed { get; set; }
     }
 }

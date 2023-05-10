@@ -49,7 +49,7 @@ namespace Univent.Application.Identity.CommandHandlers
             }
 
             var profileInfo = BasicInformation.CreateBasicInformation(request.FirstName, request.LastName, request.Username,
-    request.PhoneNumber, request.DateOfBirth, request.Hometown);
+    request.PhoneNumber, request.DateOfBirth, request.Hometown, request.ProfilePicture);
             var userProfile = UserProfile.CreateUserProfile(identityUser.Id, request.UniversityID, request.Year, profileInfo);
             
             try

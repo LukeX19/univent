@@ -12,8 +12,8 @@ using Univent.Dal;
 namespace Univent.Dal.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230506170442_CreateAdminAccounts")]
-    partial class CreateAdminAccounts
+    [Migration("20230510085815_UserProfileUpdates")]
+    partial class UserProfileUpdates
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -318,6 +318,9 @@ namespace Univent.Dal.Migrations
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isAccountConfirmed")
+                        .HasColumnType("bit");
+
                     b.HasKey("UserProfileID");
 
                     b.HasIndex("UniversityID");
@@ -407,6 +410,10 @@ namespace Univent.Dal.Migrations
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("PhoneNumber")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("ProfilePicture")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
