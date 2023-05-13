@@ -27,7 +27,7 @@ namespace Univent.Application.Events.CommandHandlers
             }
 
             _event.UpdateEvent(request.Name, request.Description, request.MaximumParticipants,
-                request.StartTime, request.EndTime);
+                request.StartTime, request.EndTime, request.LocationLat, request.LocationLng);
 
             _dbcontext.Update(_event);
             await _dbcontext.SaveChangesAsync(cancellationToken);

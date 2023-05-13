@@ -23,5 +23,11 @@ namespace Univent.Api.Contracts.Event.Requests
         [Required]
         [EndTimeAfterStartTime]
         public DateTime EndTime { get; set; }
+
+        [Required]
+        public double LocationLat { get; set; }
+
+        [Required]
+        public double LocationLng { get; set; }
     }
 }
