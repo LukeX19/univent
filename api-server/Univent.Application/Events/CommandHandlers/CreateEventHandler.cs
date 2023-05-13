@@ -17,7 +17,7 @@ namespace Univent.Application.Events.CommandHandlers
         public async Task<Event> Handle(CreateEventCommand request, CancellationToken cancellationToken)
         {
             var _event = Event.CreateEvent(request.UserProfileID, request.EventTypeID, request.Name, request.Description,
-                request.MaximumParticipants, request.StartTime, request.EndTime);
+                request.MaximumParticipants, request.StartTime, request.EndTime, request.LocationLat, request.LocationLng);
         
             _dbcontext.Events.Add(_event);
             await _dbcontext.SaveChangesAsync(cancellationToken);

@@ -49,7 +49,9 @@ namespace Univent.Api.Controllers.V1
                 Description = ev.Description,
                 MaximumParticipants = ev.MaximumParticipants,
                 StartTime = ev.StartTime,
-                EndTime = ev.EndTime
+                EndTime = ev.EndTime,
+                LocationLat = ev.LocationLat,
+                LocationLng = ev.LocationLng
             };
             var response = await _mediator.Send(command);
             var _event = _mapper.Map<EventResponse>(response);
@@ -82,7 +84,9 @@ namespace Univent.Api.Controllers.V1
                 Description = updatedEvent.Description,
                 MaximumParticipants = updatedEvent.MaximumParticipants,
                 StartTime = updatedEvent.StartTime,
-                EndTime = updatedEvent.EndTime
+                EndTime = updatedEvent.EndTime,
+                LocationLat = updatedEvent.LocationLat,
+                LocationLng = updatedEvent.LocationLng
             };
             var response = await _mediator.Send(command);
 

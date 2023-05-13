@@ -11,5 +11,7 @@ namespace Univent.Application.Events.Commands
         public int MaximumParticipants { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public double LocationLat { get; set; }
+        public double LocationLng { get; set; }
     }
 }

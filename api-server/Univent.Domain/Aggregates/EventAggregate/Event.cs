@@ -18,6 +18,8 @@ namespace Univent.Domain.Aggregates.EventAggregate
         public DateTime StartTime { get; private set; }
         public DateTime EndTime { get; private set; }
         public DateTime CreatedDate { get; private set; }
+        public double LocationLat { get; private set; }
+        public double LocationLng { get; private set; }
         public bool IsCancelled { get; private set; }
         public string? CancellationReason { get; private set; }
 
@@ -27,8 +29,8 @@ namespace Univent.Domain.Aggregates.EventAggregate
         }
 
         //Factory method
-        public static Event CreateEvent(Guid userProfileID, Guid eventTypeID, string name, string description,
-            int maximumParticipants, DateTime startTime, DateTime endTime)
+        public static Event CreateEvent(Guid userProfileID, Guid eventTypeID, string name, string description, int maximumParticipants,
+            DateTime startTime, DateTime endTime, double locationLat, double locationLng)
         {
             //TO DO: add validation and error handling
             var newEvent = new Event
@@ -41,6 +43,8 @@ namespace Univent.Domain.Aggregates.EventAggregate
                 StartTime = startTime,
                 EndTime = endTime,
                 CreatedDate = DateTime.UtcNow,
+                LocationLat = locationLat,
+                LocationLng = locationLng,
                 IsCancelled = false,
                 CancellationReason = default
             };
@@ -50,29 +54,21 @@ namespace Univent.Domain.Aggregates.EventAggregate
 
         //Public methods
         public void UpdateEvent(string newName, string newDescription, int newMaximumParticipants,
-            DateTime newStartTime, DateTime newEndTime)
+            DateTime newStartTime, DateTime newEndTime, double newLat, double newLng)
         {
             Name = newName;
             Description = newDescription;
             MaximumParticipants = newMaximumParticipants;
             StartTime = newStartTime;
             EndTime = newEndTime;
+            LocationLat = newLat;
+            LocationLng = newLng;
         }
 
         public void CancelEvent(string? cancellationReason)
         {
             IsCancelled = true;
             CancellationReason = cancellationReason;
-        }
-
-        public void AddEventParticipant(EventParticipant newUser)
-        {
-            _participants.Add(newUser);
-        }
-
-        public void RemoveEventParticipant(EventParticipant toRemoveParticipant)
-        {
-            _participants.Remove(toRemoveParticipant);
         }
     }
 }
