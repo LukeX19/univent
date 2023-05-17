@@ -18,6 +18,7 @@
         public static class Ratings
         {
             public const string IdRoute = "{id}";
+            public const string UserIdRoute = "User/{id}/Average";
         }
 
         public static class Events

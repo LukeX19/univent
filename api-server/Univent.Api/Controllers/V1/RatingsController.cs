@@ -46,6 +46,17 @@ namespace Univent.Api.Controllers.V1
         }
 
         [HttpGet]
+        [Route(ApiRoutes.Ratings.UserIdRoute)]
+        public async Task<IActionResult> GetAverageRatingByUserId(Guid id)
+        {
+            var query = new GetAverageRatingByUserId { UserProfileID = id };
+            var response = await _mediator.Send(query);
+            var value = _mapper.Map<AverageRatingResponse>(response);
+
+            return Ok(value);
+        }
+
+        [HttpGet]
         [Route(ApiRoutes.Ratings.IdRoute)]
         public async Task<IActionResult> GetRatingById(Guid id)
         {

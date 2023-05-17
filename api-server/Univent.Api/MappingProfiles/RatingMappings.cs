@@ -12,6 +12,8 @@ namespace Univent.Api.MappingProfiles
         {
             CreateMap<RatingCreate, CreateRatingCommand>();
             CreateMap<Rating, RatingResponse>();
+            CreateMap<double, AverageRatingResponse>()
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src));
         }
     }
 }
