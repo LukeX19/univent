@@ -8,6 +8,7 @@ using Univent.Api.Contracts.Event.Responses;
 using Univent.Api.Extensions;
 using Univent.Application.Events.Commands;
 using Univent.Application.Events.Queries;
+using Univent.Application.UserProfiles.Queries;
 
 namespace Univent.Api.Controllers.V1
 {
@@ -68,6 +69,17 @@ namespace Univent.Api.Controllers.V1
             var _event = _mapper.Map<EventResponse>(response);
 
             return Ok(_event);
+        }
+
+        [HttpGet]
+        [Route(ApiRoutes.Events.UserIdRoute)]
+        public async Task<IActionResult> GetEventsByUserId(Guid id)
+        {
+            var query = new GetEventsByUserId { UserProfileID = id };
+            var response = await _mediator.Send(query);
+            var events = _mapper.Map<List<EventResponse>>(response);
+
+            return Ok(events);
         }
 
         [HttpPatch]
