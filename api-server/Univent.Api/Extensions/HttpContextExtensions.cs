@@ -11,10 +11,10 @@ namespace Univent.Api.Extensions
             //return GetGuidClaimValue(context, "UserProfileId");
         }
 
-        public static Guid GetIdentityIdClaimValue(this HttpContext context)
+        public static string GetIdentityIdClaimValue(this HttpContext context)
         {
             var claimsIdentity = context.User.Identity as ClaimsIdentity;
-            return Guid.Parse(claimsIdentity?.FindFirst("IdentityId")?.Value);
+            return claimsIdentity?.FindFirst("IdentityId")?.Value;
             //return GetGuidClaimValue(context, "IdentityId");
         }
 

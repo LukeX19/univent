@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Univent.Api.Contracts.Identity;
+using Univent.Api.Extensions;
 using Univent.Application.Identity.Commands;
 
 namespace Univent.Api.Controllers.V1
@@ -44,6 +47,23 @@ namespace Univent.Api.Controllers.V1
                 Token = response
             };
             return Ok(authenticationResult);
+        }
+
+        [HttpPatch]
+        [Route(ApiRoutes.Identity.ChangePassword)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> ChangePassword(ChangePassword chPass)
+        {
+            var userID = HttpContext.GetIdentityIdClaimValue();
+            var command = new ChangePasswordCommand()
+            {
+                UserID = userID,
+                OldPassword = chPass.OldPassword,
+                NewPassword = chPass.NewPassword,
+            };
+            var response = await _mediator.Send(command);
+
+            return NoContent();
         }
     }
 }

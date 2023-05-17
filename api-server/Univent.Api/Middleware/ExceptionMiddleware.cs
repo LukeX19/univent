@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Newtonsoft.Json;
 using Univent.Application.Exceptions;
 
 namespace Univent.Api.Middleware
@@ -32,13 +33,15 @@ namespace Univent.Api.Middleware
 
             switch(exception)
             {
-                //exception is IdentityUserNotFoundException or ObjectNotFoundException
                 case IdentityUserNotFoundException:
+                case IdentityUserNotFoundByIdException:
                 case ObjectNotFoundException:
                     statusCode = StatusCodes.Status404NotFound;
                     break;
 
                 case InvalidModelStateException:
+                case IdentityUserIncorrectPasswordException:
+                case IdentityUserIncorrectPasswordByIdException:
                     statusCode = StatusCodes.Status400BadRequest;
                     break;
 

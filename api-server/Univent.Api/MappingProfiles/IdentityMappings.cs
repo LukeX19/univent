@@ -10,6 +10,7 @@ namespace Univent.Api.MappingProfiles
         {
             CreateMap<UserRegistration, RegisterIdentityCommand>();
             CreateMap<Login, LoginCommand>();
+            CreateMap<ChangePassword, ChangePasswordCommand>();
         }
     }
 }

@@ -44,6 +44,7 @@
         {
             public const string Login = "Login";
             public const string Registration = "Registration";
+            public const string ChangePassword = "ChangePassword";
         }
     }
 }
