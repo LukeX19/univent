@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Univent.Api.Contracts.Event.Responses;
 using Univent.Api.Contracts.EventParticipant.Requests;
 using Univent.Api.Contracts.EventParticipant.Responses;
+using Univent.Api.Contracts.UserProfile.Responses;
 using Univent.Api.Extensions;
 using Univent.Application.EventParticipants.Commands;
 using Univent.Application.EventParticipants.Queries;
@@ -72,13 +73,13 @@ namespace Univent.Api.Controllers.V1
 
         [HttpGet]
         [Route(ApiRoutes.EventParticipant.EventIdRoute)]
-        public async Task<IActionResult> GetEventParticipantsByEventId(Guid id_event)
+        public async Task<IActionResult> GetParticipantsByEventId(Guid id_event)
         {
-            var query = new GetEventParticipantsByEventId { EventID = id_event };
+            var query = new GetParticipantsByEventId { EventID = id_event };
             var response = await _mediator.Send(query);
-            var eventParticipants = _mapper.Map<List<EventParticipantResponse>>(response);
+            var participantsForEvent = _mapper.Map<List<UserProfileResponse>>(response);
 
-            return Ok(eventParticipants);
+            return Ok(participantsForEvent);
         }
 
         [HttpGet]
