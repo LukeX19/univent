@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Univent.Api.Contracts.Event.Responses;
 using Univent.Api.Contracts.EventParticipant.Requests;
 using Univent.Api.Contracts.EventParticipant.Responses;
 using Univent.Api.Extensions;
@@ -86,7 +87,7 @@ namespace Univent.Api.Controllers.V1
         {
             var query = new GetEventsByParticipantId { UserProfileID = id_participant };
             var response = await _mediator.Send(query);
-            var eventsForUser = _mapper.Map<List<EventParticipantResponse>>(response);
+            var eventsForUser = _mapper.Map<List<EventResponse>>(response);
 
             return Ok(eventsForUser);
         }

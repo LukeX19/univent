@@ -6,7 +6,7 @@ using Univent.Domain.Aggregates.EventAggregate;
 
 namespace Univent.Application.EventParticipants.QueryHandlers
 {
-    internal class GetEventsByParticipantIdHandler :IRequestHandler<GetEventsByParticipantId, IEnumerable<EventParticipant>>
+    internal class GetEventsByParticipantIdHandler :IRequestHandler<GetEventsByParticipantId, IEnumerable<Event>>
     {
         private readonly DataContext _dbcontext;
 
@@ -15,10 +15,16 @@ namespace Univent.Application.EventParticipants.QueryHandlers
             _dbcontext = dbcontext;
         }
 
-        public async Task<IEnumerable<EventParticipant>> Handle(GetEventsByParticipantId request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Event>> Handle(GetEventsByParticipantId request, CancellationToken cancellationToken)
         {
-            var events = await _dbcontext.EventParticipants
+            var eventParticipants = await _dbcontext.EventParticipants
                 .Where(ep => ep.UserProfileID == request.UserProfileID)
+                .ToListAsync(cancellationToken);
+
+            var eventIds = eventParticipants.Select(ep => ep.EventID).ToList();
+
+            var events = await _dbcontext.Events
+                .Where(e => eventIds.Contains(e.EventID))
                 .ToListAsync(cancellationToken);
 
             return events;
