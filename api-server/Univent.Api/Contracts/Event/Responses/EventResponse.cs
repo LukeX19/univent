@@ -12,6 +12,7 @@ namespace Univent.Api.Contracts.Event.Responses
         public int MaximumParticipants { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public DateTime CreatedDate { get; set; }
         public double LocationLat { get; set; }
         public double LocationLng { get; set; }
         public bool IsCancelled { get; set; }
