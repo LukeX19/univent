@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Univent.Api.Contracts.Event.Responses
+﻿namespace Univent.Api.Contracts.Event.Responses
 {
     public record EventResponse
     {
@@ -16,6 +14,5 @@ namespace Univent.Api.Contracts.Event.Responses
         public double LocationLat { get; set; }
         public double LocationLng { get; set; }
         public bool IsCancelled { get; set; }
-        public string? CancellationReason { get; set; }
     }
 }

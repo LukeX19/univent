@@ -26,7 +26,7 @@ namespace Univent.Application.Events.CommandHandlers
                 throw new EventUpdateNotPossibleException();
             }
 
-            _event.CancelEvent(request.CancellationReason);
+            _event.CancelEvent();
 
             _dbcontext.Update(_event);
             await _dbcontext.SaveChangesAsync(cancellationToken);

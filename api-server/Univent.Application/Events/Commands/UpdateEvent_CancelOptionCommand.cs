@@ -6,6 +6,5 @@ namespace Univent.Application.Events.Commands
     {
         public Guid EventID { get; set; }
         public Guid UserProfileID { get; set; }
-        public string? CancellationReason { get; set; }
     }
 }
