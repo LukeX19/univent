@@ -30,7 +30,7 @@ namespace Univent.Application.UserProfiles.CommandHandlers
             var identityUser = await _userManager.FindByEmailAsync(userProfile.BasicInfo.EmailAddress);
             if (identityUser == null)
             {
-                throw new IdentityUserNotFoundException(request.EmailAddress);
+                throw new IdentityUserNotFoundException(userProfile.BasicInfo.EmailAddress);
             }
 
             userProfile.UpdateBasicInformation(basicInformation);
