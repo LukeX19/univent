@@ -21,7 +21,6 @@ namespace Univent.Domain.Aggregates.EventAggregate
         public double LocationLat { get; private set; }
         public double LocationLng { get; private set; }
         public bool IsCancelled { get; private set; }
-        public string? CancellationReason { get; private set; }
 
         //Constructor
         private Event()
@@ -45,8 +44,7 @@ namespace Univent.Domain.Aggregates.EventAggregate
                 CreatedDate = DateTime.UtcNow,
                 LocationLat = locationLat,
                 LocationLng = locationLng,
-                IsCancelled = false,
-                CancellationReason = default
+                IsCancelled = false
             };
 
             return newEvent;
@@ -65,10 +63,9 @@ namespace Univent.Domain.Aggregates.EventAggregate
             LocationLng = newLng;
         }
 
-        public void CancelEvent(string? cancellationReason)
+        public void CancelEvent()
         {
             IsCancelled = true;
-            CancellationReason = cancellationReason;
         }
     }
 }

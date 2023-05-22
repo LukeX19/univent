@@ -107,15 +107,14 @@ namespace Univent.Api.Controllers.V1
 
         [HttpPatch]
         [Route(ApiRoutes.Events.CancelRoute)]
-        public async Task<IActionResult> CancelEvent(Guid id, EventUpdate_CancelOption cancelledEvent)
+        public async Task<IActionResult> CancelEvent(Guid id)
         {
             var userProfileId = HttpContext.GetUserProfileIdClaimValue();
 
             var command = new UpdateEvent_CancelOptionCommand()
             {
                 UserProfileID = userProfileId,
-                EventID = id,
-                CancellationReason = cancelledEvent.CancellationReason,
+                EventID = id
             };
             var response = await _mediator.Send(command);
 
