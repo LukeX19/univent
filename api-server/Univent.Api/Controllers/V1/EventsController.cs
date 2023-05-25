@@ -8,7 +8,6 @@ using Univent.Api.Contracts.Event.Responses;
 using Univent.Api.Extensions;
 using Univent.Application.Events.Commands;
 using Univent.Application.Events.Queries;
-using Univent.Application.UserProfiles.Queries;
 
 namespace Univent.Api.Controllers.V1
 {

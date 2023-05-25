@@ -58,6 +58,20 @@ namespace Univent.Api.Controllers.V1
             return NoContent();
         }
 
+        [HttpPatch]
+        [Route(ApiRoutes.UserProfiles.ApproveRoute)]
+        [Authorize(Policy = "AdminOnly")]
+        public async Task<IActionResult> ApproveUserProfile(Guid id)
+        {
+            var command = new UpdateUserProfile_ApproveComand()
+            {
+                UserProfileID = id
+            };
+            var response = await _mediator.Send(command);
+
+            return NoContent();
+        }
+
         [HttpDelete]
         [Route(ApiRoutes.UserProfiles.IdRoute)]
         public async Task<IActionResult> DeleteUserProfile(Guid id)

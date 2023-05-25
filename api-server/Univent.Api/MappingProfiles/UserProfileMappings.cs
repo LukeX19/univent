@@ -13,6 +13,7 @@ namespace Univent.Api.MappingProfiles
             CreateMap<UserProfileCreateUpdate, UpdateUserProfileBasicInformationCommand>();
             CreateMap<UserProfile, UserProfileResponse>();
             CreateMap<BasicInformation, BasicInfo>();
+            CreateMap<UserProfileUpdate_ApproveProfile, UpdateUserProfile_ApproveComand>();
         }
     }
 }
