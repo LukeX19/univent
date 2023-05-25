@@ -8,6 +8,7 @@
         public static class UserProfiles
         {
             public const string IdRoute = "{id}";
+            public const string Unnaproved = "Unapproved";
         }
 
         public static class Universities
