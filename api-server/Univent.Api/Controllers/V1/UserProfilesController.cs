@@ -67,5 +67,16 @@ namespace Univent.Api.Controllers.V1
 
             return NoContent();
         }
+
+        [HttpGet]
+        [Route(ApiRoutes.UserProfiles.Unnaproved)]
+        public async Task<IActionResult> GetUnapprovedProfiles()
+        {
+            var query = new GetUnapprovedUserProfiles();
+            var response = await _mediator.Send(query);
+            var profiles = _mapper.Map<List<UserProfileResponse>>(response);
+
+            return Ok(profiles);
+        }
     }
 }
