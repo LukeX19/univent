@@ -57,5 +57,10 @@ namespace Univent.Domain.Aggregates.UserAggregate
             UniversityID = universityID;
             Year = year;
         }
+
+        public void ApproveUser()
+        {
+            isAccountConfirmed = true;
+        }
     }
 }

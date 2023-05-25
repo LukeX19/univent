@@ -9,6 +9,7 @@
         {
             public const string IdRoute = "{id}";
             public const string Unnaproved = "Unapproved";
+            public const string ApproveRoute = "{id}/Approve";
         }
 
         public static class Universities
