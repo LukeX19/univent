@@ -43,7 +43,7 @@ namespace Univent.Application.UserProfiles.CommandHandlers
                 _dbcontext.EventParticipants.RemoveRange(eventParticipants);
             }
 
-            //Get all participations for this User in other events
+            //Get all participations for this User in other events and delete them
             var thisUserParticipations = await _dbcontext.EventParticipants
                 .Where(ep => ep.UserProfileID == request.UserProfileID)
                 .ToListAsync(cancellationToken);
