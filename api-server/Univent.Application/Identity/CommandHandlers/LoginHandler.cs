@@ -37,7 +37,12 @@ namespace Univent.Application.Identity.CommandHandlers
                 throw new IdentityUserIncorrectPasswordException(request.Username);
             }
 
-            var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.IdentityID == identityUser.Id, cancellationToken);
+            var userProfile = await _dbcontext.UserProfiles.FirstOrDefaultAsync(up => up.BasicInfo.EmailAddress == request.Username, cancellationToken);
+            if(!userProfile.isAccountConfirmed)
+            {
+                throw new UnapprovedUserException(request.Username);
+            }
+
             var role = await _userManager.GetRolesAsync(identityUser);
             var claimsIdentity = new ClaimsIdentity(new Claim[]
             {

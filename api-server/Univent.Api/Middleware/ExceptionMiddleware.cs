@@ -51,6 +51,7 @@ namespace Univent.Api.Middleware
 
                 case EventUpdateNotPossibleException:
                 case EventDeleteNotPossibleException:
+                case UnapprovedUserException:
                     statusCode = StatusCodes.Status403Forbidden;
                     break;
 
