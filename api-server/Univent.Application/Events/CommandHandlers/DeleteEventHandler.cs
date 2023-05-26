@@ -35,6 +35,11 @@ namespace Univent.Application.Events.CommandHandlers
                 throw new EventDeleteNotPossibleException();
             }
 
+            var eventParticipants = await _dbcontext.EventParticipants
+                .Where(ep => ep.EventID == request.EventID)
+                .ToListAsync(cancellationToken);
+
+            _dbcontext.EventParticipants.RemoveRange(eventParticipants);
             _dbcontext.Events.Remove(_event);
             await _dbcontext.SaveChangesAsync(cancellationToken);
 
