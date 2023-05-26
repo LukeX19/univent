@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Univent.Application.Exceptions;
 using Univent.Application.UserProfiles.Commands;
 using Univent.Dal;
+using Univent.Domain.Aggregates.EventAggregate;
 using Univent.Domain.Aggregates.UserAggregate;
 
 namespace Univent.Application.UserProfiles.CommandHandlers
@@ -29,6 +30,24 @@ namespace Univent.Application.UserProfiles.CommandHandlers
             {
                 throw new IdentityUserNotFoundException(userProfile.BasicInfo.EmailAddress);
             }
+
+            //Get all events created by user
+            var userEvents = await _dbcontext.Events.Where(e => e.UserProfileID == request.UserProfileID).ToListAsync(cancellationToken);
+            foreach (var userEvent in userEvents)
+            {
+                //Delete all participants for every event created by this user, as those Events will be automatically deleted
+                var eventParticipants = await _dbcontext.EventParticipants
+                    .Where(ep => ep.EventID == userEvent.EventID)
+                    .ToListAsync(cancellationToken);
+
+                _dbcontext.EventParticipants.RemoveRange(eventParticipants);
+            }
+
+            //Get all participations for this User in other events
+            var thisUserParticipations = await _dbcontext.EventParticipants
+                .Where(ep => ep.UserProfileID == request.UserProfileID)
+                .ToListAsync(cancellationToken);
+            _dbcontext.EventParticipants.RemoveRange(thisUserParticipations);
 
             _dbcontext.UserProfiles.Remove(userProfile);
             await _dbcontext.SaveChangesAsync(cancellationToken);
