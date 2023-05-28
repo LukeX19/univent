@@ -8,6 +8,7 @@ namespace Univent.Domain.Aggregates.EventAggregate
         public Guid UserProfileID { get; private set; }
         public Event Event { get; private set; }
         public UserProfile UserProfile { get; private set; }
+        public bool hasProvidedFeedback { get; private set; }
 
         //Constructor
         public EventParticipant()
@@ -20,12 +21,16 @@ namespace Univent.Domain.Aggregates.EventAggregate
             var newEventParticipant = new EventParticipant
             {
                  EventID = eventID,
-                 UserProfileID = userProfileID
+                 UserProfileID = userProfileID,
+                 hasProvidedFeedback = false
             };
 
             return newEventParticipant;
         }
 
-
+        public void UserProvidedFeedback()
+        {
+            hasProvidedFeedback = true;
+        }
     }
 }

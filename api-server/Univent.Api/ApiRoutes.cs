@@ -40,6 +40,7 @@
             public const string BothIdsRoute = "Event/{id_event}/User/{id_participant}";
             public const string EventIdRoute = "Event/{id_event}/Participants";
             public const string UserProfileIdRoute = "User/{id_participant}/EnrolledEvents";
+            public const string FeedbackRoute = "Event/{id_event}/Feedback";
         }
 
         public static class Identity
