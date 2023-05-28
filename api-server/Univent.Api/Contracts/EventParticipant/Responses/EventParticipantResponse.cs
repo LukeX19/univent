@@ -4,5 +4,6 @@
     {
         public Guid EventID { get; set; }
         public Guid UserProfileID { get; set; }
+        public bool hasProvidedFeedback { get; set; }
     }
 }
