@@ -10,6 +10,7 @@ using Univent.Api.Contracts.UserProfile.Responses;
 using Univent.Api.Extensions;
 using Univent.Application.EventParticipants.Commands;
 using Univent.Application.EventParticipants.Queries;
+using Univent.Application.Events.Commands;
 
 namespace Univent.Api.Controllers.V1
 {
@@ -91,6 +92,22 @@ namespace Univent.Api.Controllers.V1
             var eventsForUser = _mapper.Map<List<EventResponse>>(response);
 
             return Ok(eventsForUser);
+        }
+
+        [HttpPatch]
+        [Route(ApiRoutes.EventParticipant.FeedbackRoute)]
+        public async Task<IActionResult> MarkFeedbackSent(Guid id_event)
+        {
+            var userProfileId = HttpContext.GetUserProfileIdClaimValue();
+
+            var command = new UpdateEventParticipant_SetFeedbackCommand()
+            {
+                UserProfileID = userProfileId,
+                EventID = id_event
+            };
+            var response = await _mediator.Send(command);
+
+            return NoContent();
         }
 
         [HttpDelete]
