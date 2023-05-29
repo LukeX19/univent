@@ -36,6 +36,17 @@ namespace Univent.Api.Controllers.V1
             return Ok(events);
         }
 
+        [HttpGet]
+        [Route(ApiRoutes.Events.AvailableRoute)]
+        public async Task<IActionResult> GetAvailableEvents()
+        {
+            var query = new GetAvailableEvents();
+            var response = await _mediator.Send(query);
+            var events = _mapper.Map<List<EventResponse>>(response);
+
+            return Ok(events);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateEvent(EventCreate ev)
         {

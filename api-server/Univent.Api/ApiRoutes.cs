@@ -25,6 +25,7 @@
 
         public static class Events
         {
+            public const string AvailableRoute = "Available";
             public const string IdRoute = "{id}";
             public const string UserIdRoute = "User/{id}";
             public const string CancelRoute = "{id}/CancelEvent";
