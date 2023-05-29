@@ -16,7 +16,7 @@ namespace Univent.Application.EventTypes.CommandHandlers
 
         public async Task<EventType> Handle(CreateEventTypeCommand request, CancellationToken cancellationToken)
         {
-            var eventType = EventType.CreateEventType(request.Name);
+            var eventType = EventType.CreateEventType(request.Name, request.Picture);
 
             _dbcontext.EventTypes.Add(eventType);
             await _dbcontext.SaveChangesAsync(cancellationToken);

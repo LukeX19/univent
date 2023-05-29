@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using Univent.Domain.Aggregates.EventAggregate;
+using Univent.Application.DTOs;
 
 namespace Univent.Application.Events.Queries
 {
-    public class GetAllEvents : IRequest<IEnumerable<Event>>
+    public class GetAllEvents : IRequest<IEnumerable<EventReadModel>>
     {
     }
 }

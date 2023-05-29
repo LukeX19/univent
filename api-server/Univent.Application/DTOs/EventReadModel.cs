@@ -1,6 +1,12 @@
-﻿namespace Univent.Api.Contracts.Event.Responses
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Univent.Application.DTOs
 {
-    public record EventResponse
+    public class EventReadModel
     {
         public Guid EventID { get; set; }
         public Guid UserProfileID { get; set; }
