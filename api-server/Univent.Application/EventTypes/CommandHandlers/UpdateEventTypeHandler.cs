@@ -21,7 +21,7 @@ namespace Univent.Application.EventTypes.CommandHandlers
             var eventType = await _dbcontext.EventTypes.FirstOrDefaultAsync(et => et.EventTypeID == request.EventTypeID, cancellationToken)
                 ?? throw new ObjectNotFoundException(nameof(EventType), request.EventTypeID);
 
-            eventType.UpdateEventType(request.Name);
+            eventType.UpdateEventType(request.Name, request.Picture);
 
             _dbcontext.Update(eventType);
             await _dbcontext.SaveChangesAsync(cancellationToken);
