@@ -6,7 +6,7 @@ This application serves as a virtual space where students enrolled in multiple u
 This repository consists of the server project only. [The client project can be found here](https://github.com/LukeX19/univent-fe)
 
 ## Technologies used
-- ASP.NET Core, with Entity Framework, version 6 
+- ASP.NET Core + Entity Framework, version 6 
 - Microsoft SQL Server 2019
 
 ## Prerequisites
